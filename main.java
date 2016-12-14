@@ -8,17 +8,31 @@ Log.e(TAG, "methodName: error information");
 varName = (byte) varNewName;
 
 
-/*** PRIMITIVE TYPE ***/
+/*** PRIMITIVE TYPE CALL-BY-COPY ***/
 byte, short, int, long varName;     // width 8,16,32,64-bit
 char = 'a';     // width 16-bit
 float, double time = 1.2;       // width 32,64-bit
 boolean oldy = (age > 35);
 
 
-/*** STRING OBJECT ***/
+/*** CONSTANTS ***/
+final int FILE_NEW = 1;
+
+
+/*** OBJECT CALL-BY-REFERENCE ***/
+// all objects are subclasses of one super class named Object
+Object clone();     // creates a new same obj
+boolean equals(Object obj);     // if one obj is equal to another
+String toString();      // returns a string that describes th obj
+
+
+/*** STRING IMMUTABLE OBJECT ***/
 // strings are not arrays of chars
 String name = "Name";
 System.out.println("Name: " + name);
+
+
+/*** STRING_BUFFER STRING_BUILDER ***/
 
 
 /*** ENUM ***/
@@ -57,8 +71,7 @@ switch (expression) {       // switch statements can be nested
     case valeOne:       // can be of type byte, short, int, char, String
         statement; break;
     default:
-        statement;
-}
+        statement; }
 
 while (boolean_expression) {		// use break/continue
 	System.out.println("Logic here"); }
@@ -84,39 +97,70 @@ outer: for (;;) {       // named break and continue
 
 
 /*** CLASS ***/
+// as soon as class is loaded, all of the static statements are run, from top to down
 public class ClassName {		// defining a class
-	private String handleName;		// instance variables
+	static int a = 3;
+    private String handleName;		// private instance variable, remain private to ClassName
 	private int startLives;
 	
 	public ClassName() {		// constructor
-		this("Unknown player");
-	}
+		this("Unknown player"); }
 	public ClassName(String name) {		// constructor with different signature
-		this(name, 3);
-	}
+		this(name, 3);	}
 	public ClassName(String name, int lives) {		// constructor with different signature
 		this.handleName = name;
-		this.startLives = lives;
-	}
+		this.startLives = lives; }
+    public ClassName(ClassName ob) {        // pass object to constructor
+        this.handleName = ob.name;
+        this.startLives = ob.lives; }
+
+    final void anyName(){;}     // prevent overriding, method or class cannot be overridden
+
+    static {
+        System.out.println("Logic here"); }     // static block executed once when the class is first loaded
+
 	public String getHandeName() {		// getter method for every field
-		return handleName;
-	}
+		return handleName; }
 	public void setHandleName(String name) {		// setter method for every field
-		this.handleName = name;
-	}
+		this.handleName = name; }
     protected void finalize() {}        // runtime will call this method before destroy the obj
+
+    class InnerClass {      // nested class, has directly access to all outer vars / methods
+        void display() {
+            System.out.println("Logic here"); }
+    }
 }
-public class SubClassName extends ClassName {
-	public SubClassName(String name, int lives) {		// call super class constructor
-		super(name, lives); }
+
+public class SubClassName extends ClassName {       // cannot inherite private members
+	SubClassName(String name, int lives) {		// call closest super class constructor
+		super(name, lives);   }
+    SubClassName(SubClassName ob) {     // passed obh SubClassName to super constr that receives ClassName
+        super(ob);  }       // super class variable can be used to reference any obj derived from that class
+
 	@Override
-	public void methodName(int parameter) {		// override method
-		super.methodName(parameter / 2); }
+	public void methodName(int parameter) {		// override super class method, same name and type signature
+		super.methodName(parameter / 2);  }
 }
+
 ClassName name = new ClassName();		// create a new instance
 ClassName newName = new ClassName("Name");
-ClassName anotherName = new ClassName("Name", 5);
+SubClassName anotherName = new SubClassName("Name", 5);
+
+ClassName dmdName;       // declaration of reference of type ClassName
+dmdName = newName; dmdName.methodName      // dynamic method dispatch
+dmdName = anotherName; dmdName.methodName       // dynamic method dispatch
 
 
-/***  ***/
+/*** ABSTRACT CLASS / METHOD ***/
+// cannot be directly instantiate with the new operator
+abstract absClassName {     // class must be abstract if contains abstruct methods
+    abstract void methodName(int parameter);        // abstract method, subclass must override it
+}
+
+
+/*** METHOD ***/
+static void anyMethodName (int ... args) {}     // variable-length argument, zero or more, as array of ints
+
+
+
 /***  ***/
