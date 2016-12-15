@@ -1,3 +1,15 @@
+/*** PACKAGE AND ACCESS ***/
+package pcgName;        // statement defines a name space, must be stored in directory pcgName
+import java.util.Date;
+import java.io.*;
+
+// below applies obly to members of classes
+public;     // can be accessed from anywhere
+private;        // cannot be seen outside of its class
+protected;      // can be seen outside current package, but only for your subclasses
+// no explicit access, visible to subclasses as well as to other classes in the same package
+
+
 /*** LOGGING OUT DATA ***/
 private static final String TAG = "ClassName";
 Log.d(TAG, "methodName: information" + varName);
@@ -161,6 +173,84 @@ abstract absClassName {     // class must be abstract if contains abstruct metho
 /*** METHOD ***/
 static void anyMethodName (int ... args) {}     // variable-length argument, zero or more, as array of ints
 
+
+/*** INTERFACE ***/
+interface SharedConstants {
+    int NO = 0;     // variables in interface, must be init, will be in scope as constants
+    int YES = 1;
+}
+interface Callback extends SharedConstants {
+    void callback(int parameter);       // interface method declaration, must be implemented in class
+    default String getString() {return "Logic here";}        // default method with implementation
+    static int getNumber() {return 0;}      // static method, no implementation required, not inherited
+}
+class Client implements Callback {
+    public void callback(int parameter) {;}     // must be public
+    public void newName(int parameter) {;}
+    public String getString() {return "Logic here";}        // interface method overriding
+}
+// interface reference variable
+Callback call = new Client();       // call can be used to acces callback method in Client class
+call.callback(42);      // but cannot access newName method, only methods declared by its interface
+int defNum = Callback.getNumber();      // static interface method call
+
+// nested interface
+class A {
+    public interface NestedIF {
+        boolean isNotNefative(int x);
+    }
+}
+class B implements A.NestedIF {     // class B implements the nested interface
+    public boolean isNotNefative(int x) {
+        return x < 0 ? false : true;
+    }
+}
+A.NestedIF nif = new B();
+if (nif.isNotNefative(10))
+    System.out.println("Logic here");
+
+
+/*** EXCEPTION HANDLING ***/
+// Throwable (first branch) -> Exception -> RuntimeException
+// Throwable (second branch) -> Error
+try {
+    // block of code to monitor for errors
+    try {
+        // nested block of code to monitor for errors
+    } catch (ExceptionTypeZero exObj) {
+        // nested exception handler
+    }
+} catch (ExceptionTypeOne exObj) {
+    // exception handler
+} catch (ExceptionTypeTwo exObj) {
+    // exception handler
+} finally {
+    // block of code to executed after try block ends
+}
+
+// throw exception explicitly
+class ThrowDemo {
+    static void demoroc() throws IlligalAccessException {       // must include throws if...
+        try {       // method is capable of causing an exception, except of type Error or RuntimeExeption
+            throw new NullpointerException("demo");
+        } catch (NullpointerException e) {
+            System.out.println("This will be printed first");
+            throw e;
+        }
+    }
+}
+public static void main(String args[]) {
+    try {
+        demoroc();
+    } catch (NullpointerException e) {
+        System.out.println("This will be printed second");
+    }
+}
+
+
+/*** MULTITHREADING ***/
+// process-based several programs at once
+// thread-based one programm several dispatchable code
 
 
 /***  ***/
