@@ -249,8 +249,160 @@ public static void main(String args[]) {
 
 
 /*** MULTITHREADING ***/
-// process-based several programs at once
-// thread-based one programm several dispatchable code
+// extending Thread superclass
+class NewThread extends Thread {
+    NewThread() {
+        super("Second Thread");
+        start(); }
+    public void run() {
+        try {
+            for (int i = 5; i > 0; i--)
+                Thread.sleep(500);
+        } catch (InterruptedException e) {
+            System.out.println("Error logic here"); }
+    }
+}
+public static void main(String args[]) {
+    new Thread();       // create a new thread
+    try {
+        for (int i = 5; i > 0; i--)
+            Thread.sleep(1000);
+    } catch (InterruptedException e) {
+        System.out.println("Error logic here"); }
+}
+
+// implementing Runnable interface
+class NewThread implements Runnable {
+    String name;
+    Thread t;
+    NewThread(String threadName) {
+        name = threadName;
+        t = new Thread(this, name);
+        t.start();
+    }
+    public void run() {
+        try {
+            for (int i = 5; i > 0; i--)
+                Thread.sleep(500);
+        } catch (InterruptedException e) {
+            System.out.println("Error logic here");
+        }
+    }
+}
+public static void main(String args[]) {
+    NewThread objOne = new NewThread("One");        // create a new thread
+    NewThread objTwo = new NewThread("Two");
+    System.out.println("Is alive: " + objOne.t.isAlive());      // true if thread is still running
+    try {
+        objOne.t.join();        // wait for a thread to finish
+        objTwo.t.join();
+        System.out.println("Main thread logic here");
+    } catch (InterruptedException e) {
+        System.out.println("Error logic here");
+    }
+}
+
+// synchronized methods, cannot be access by different threads at one time
+class Callme {
+    synchronized void call(String msg) {
+        try {
+            System.out.println("Logic here");
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            System.out.println("Error logic here");
+        }
+    }
+}
+class Caller implements Runnable {
+    String msg;
+    Callme target;
+    Thread t;
+    public Caller(Callme targ, String s) {
+        target = targ;
+        msg = s;
+        t = new Thread(this);
+        t.start();
+    }
+    public void run() {     // class Callme with method definition with the keyword synchronized 
+        target.call(msg);
+    }
+    public void run() {     // synchronized block if Callme class without the keyword synchronized
+        synchronized(target) {
+            target.call(msg);
+        }
+    }
+}
+public static void main(String args[]) {
+    Callme target = new Callme();
+    Caller objOne = new Caller(target, "Hello");
+    Caller objTwo = new Caller(target, "World");
+    try {
+        objOne.t.join();
+        objTwo.t.join();
+    } catch (InterruptedException e) {
+        System.out.println("Error logic here");
+    }
+}
+
+// interthread communication
+class Q {
+    int n;
+    boolean valueSet = false;
+    synchronized int get() {
+        while(!valueSet)
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                System.out.println("Error logic here");
+            }
+        valueSet = false;
+        notify();
+        return n;
+    }
+    synchronized void put(int n) {
+        while(valueSet)
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                System.out.println("Error logic here");
+            }
+            this.n = n;
+            valueSet = true;
+            notify();
+    }
+}
+class Producer implements Runnable {
+    Q q;
+    Producer(Q q) {
+        this.q = q;
+        new Thread(this, "Producer").start();
+    }
+    public void run() {
+        int i = 0;
+        while(true)
+            q.put(i++);
+    }
+}
+class Consumer implements Runnable {
+    Q q;
+    Consumer (Q q) {
+        this.q = q;
+        new Thread(this, "Consumer").start();
+    }
+    public void run() {
+        while(true)
+            q.get();
+    }
+}
+public static void main(String args[]) {
+    Q q = new Q();
+    new Producer(Q);
+    new Consumer(Q);
+}
 
 
+
+
+/***  ***/
+/***  ***/
 /***  ***/
