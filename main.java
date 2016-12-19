@@ -1,30 +1,52 @@
-/*** PACKAGE AND ACCESS ***/
+/*** PACKAGE, ACCESS, MODIFIERS ***/
 package pcgName;        // statement defines a name space, must be stored in directory pcgName
 import java.util.Date;
 import java.io.*;
+import static java.lang.Math.pow;       // now pow() method can be used without full class name
 
-// below applies obly to members of classes
 public;     // can be accessed from anywhere
 private;        // cannot be seen outside of its class
 protected;      // can be seen outside current package, but only for your subclasses
-// no explicit access, visible to subclasses as well as to other classes in the same package
+// no explicit access = visible to subclasses as well as to other classes in the same package
+
+volatile;       // var can be changed unexpectedly
+strictfp class MyClass {}       // use origional floating point model 
+class A {
+    transient int a;        // contents of var will not be saved if obj written to a pesistent storage
+    int b;  }       // will persist
 
 
-/*** LOGGING OUT DATA ***/
-private static final String TAG = "ClassName";
-Log.d(TAG, "methodName: information" + varName);
-Log.e(TAG, "methodName: error information");
-
-
-/*** TYPE CASTING ***/
+/*** TYPE CASTING and INSTANCEOF ***/
 varName = (byte) varNewName;
+if (objA instanceof ClassA) {;}     // true or false
 
 
-/*** PRIMITIVE TYPE CALL-BY-COPY ***/
+/*** PRIMITIVE TYPE CALL-BY-VALUE ***/
 byte, short, int, long varName;     // width 8,16,32,64-bit
 char = 'a';     // width 16-bit
 float, double time = 1.2;       // width 32,64-bit
 boolean oldy = (age > 35);
+
+
+/*** TYPE WRAPPERS BOXING/UNBOXING OBJECTS ***/
+Double, Float, Long, Integer, Short, Byte, Character, Boolean;
+Character(char ch);     // constuctor
+char charValue();       // return the encapsulated char
+
+Boolean(boolean boolValue);     // constructor, true or false only
+Boolean(String boolString);     // constructor from String, takes "true" (upper or lower case)
+boolean booleanValue();     // return boolean equivalent of the invoking obj
+
+Integer(int num);       // constructor for all numeric values
+Integer(String str);        // must contain valid num value or NumberFormatException is thrown
+byte byteValue(); double doubleValue(); float floatValue();     // return value from obj wrapper
+int intValue(); long longValue(); short shortValue();
+Integer iOb = new Integer(100);
+int i = iOb.intValue();
+
+// autoboxing, works with increments and in regular expressions
+Integer iOb = 100;      // modern way to construct an Integer object
+int i = iOb;        // modern
 
 
 /*** CONSTANTS ***/
@@ -47,8 +69,23 @@ System.out.println("Name: " + name);
 /*** STRING_BUFFER STRING_BUILDER ***/
 
 
-/*** ENUM ***/
-enum LootType {POTION, RING, ARMOR}
+/*** ENUM CLASS TYPES ***/
+// can be compared using == and in switch statements
+enum LootType {POTION, RING}     // enumeration constants, public static final obj of its type
+LootType vaName = LootType.RING;
+public static enum-type [] values();        // method returns an array of list of enum constants
+public static enum-type valueOf(String str);        // method returns enum const whose value == str
+
+enum Apple {
+    private int price;
+    GoldenDel(9), RedDel(12), Cortland(8);      // each enum constant has its own copy of price
+    Apple(int p) { price = p; }     // constructor called once for each enum constant
+    int getPrice() { return price; }
+}
+for (Apple a : Apple.values()) {
+    System.out.println("Logic here" + a.getPrice());   }
+final int ordinal();        // return ordinal value of the invoking const, from 0 to ...
+final int compareTo(enum-type e);       // compare the orginal values, both must from the same enum
 
 
 /*** TEST CONDITION ***/
@@ -401,8 +438,25 @@ public static void main(String args[]) {
 }
 
 
+/*** ANNOTATION ***/
+
+
+
+
+/*** STREAMS ***/
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+String str[] = new String[100];
+for (int i = 0; i < 100; i++) {
+    str[i] = br.readLine();
+    if (str[i].equals("stop"))
+        break;
+}
+
+
+/*** JAVA NATIVE INTERFACE ***/
+// include C/C++ libs
 
 
 /***  ***/
-/***  ***/
-/***  ***/
+
+
