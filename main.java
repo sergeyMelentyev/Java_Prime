@@ -180,6 +180,7 @@ public class ClassName {		// defining a class
     }
 }
 
+// inheritens
 public class SubClassName extends ClassName {       // cannot inherite private members
 	SubClassName(String name, int lives) {		// call closest super class constructor
 		super(name, lives);   }
@@ -189,6 +190,17 @@ public class SubClassName extends ClassName {       // cannot inherite private m
 	@Override
 	public void methodName(int parameter) {		// override super class method, same name and type signature
 		super.methodName(parameter / 2);  }
+}
+
+// this constructor
+class NewClass {
+    int a; int b;
+    NewClass(int i, int i) {        // regular constructor, init a and b individually
+        a = i; b = i; }
+    NewClass(int i) {       // constructor invokes NewClass(i, i)
+        this(i, i); }
+    NewClass() {        // constructor invokes NewClass(0)
+        this(0); }
 }
 
 ClassName name = new ClassName();		// create a new instance
@@ -436,6 +448,55 @@ public static void main(String args[]) {
     new Producer(Q);
     new Consumer(Q);
 }
+
+
+/*** GENERICS PARAMETERIZED TYPES ***/
+class Generics<Type> {      // Type is a parameter that will be replaced by a real type, can take two+ params
+    Type objName;
+    Generics(Type obj) {
+        objName = obj;
+    }
+    Type getObj() {     // pass the constructor a reference to an object of type Type
+        return objName;
+    }
+    void showType() {
+        System.out.println("Type is: " + objName.getClass().getName());
+    }
+}
+public static void main(String args[]) {
+    Generics<Integer> iOb;      // create a reference for Integers
+    iOb = new Generics<Integer>(88);        // create a new obj, use autoboxing  to encapsulate int
+    iOb.showType();
+    int value = iOb.getObj();
+}
+
+// Bounded types
+class Stats<T extends Number> {     // type argument must be either Number or a class derived from it
+    T[] nums;
+    Stats(T[] o) {      // pass the constructor a ref to an array of type Number or subclass
+        nums = o;
+    }
+    double average() {
+        double sum = 0.0;
+        for (int i = 0; i < nums.length; i++)
+            sum += nums[i].doubleValue();
+        return sum / nums.length;
+    }
+    boolean sameAvg(Stats<?> ob) {      // wildcard argument, Stats<?> matches any Stats obj
+        if (average() == ob.average())
+            return true;
+        return false;
+    }
+}
+public static void main(String args[]) {
+    Integer inums[] = {1, 2, 3};
+    Stats<Integer> iOb = new Stats<Integer>(inums);
+    double v = iOb.average();
+}
+
+class Gen<T extends MyClass & MyInterface> {;}      // T is boubnded by a class MyClass and an inteface...
+// MyInterface. Any type argument passed to T must be a subclass of MyClass and implement MyInterface
+
 
 
 /*** ANNOTATION ***/
