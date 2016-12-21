@@ -69,6 +69,16 @@ System.out.println("Name: " + name);
 /*** STRING_BUFFER STRING_BUILDER ***/
 
 
+/*** STREAMS ***/
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+String str[] = new String[100];
+for (int i = 0; i < 100; i++) {
+    str[i] = br.readLine();
+    if (str[i].equals("stop"))
+        break;
+}
+
+
 /*** ENUM CLASS TYPES ***/
 // can be compared using == and in switch statements
 enum LootType {POTION, RING}     // enumeration constants, public static final obj of its type
@@ -162,6 +172,9 @@ public class ClassName {		// defining a class
     public ClassName(ClassName ob) {        // pass object to constructor
         this.handleName = ob.name;
         this.startLives = ob.lives; }
+    
+    <T extends Number> ClassName(T arg) {       // generic constructor
+        startLives = arg.intValue(); }
 
     final void anyName(){;}     // prevent overriding, method or class cannot be overridden
 
@@ -176,7 +189,12 @@ public class ClassName {		// defining a class
 
     class InnerClass {      // nested class, has directly access to all outer vars / methods
         void display() {
-            System.out.println("Logic here"); }
+            System.out.println("Logic here"); } }
+
+    static <T extends Comparable<T>, V extends T> boolean isInt(T x, V[] y) {   // static generic method...
+        for (int i = 0; i < y.length; i++) {        // can be called independently with any obj...
+            if (x.equals(y[i])) return true;        // with upper bound Comparable
+        return false;
     }
 }
 
@@ -212,7 +230,7 @@ dmdName = newName; dmdName.methodName      // dynamic method dispatch
 dmdName = anotherName; dmdName.methodName       // dynamic method dispatch
 
 
-/*** ABSTRACT CLASS / METHOD ***/
+/*** ABSTRACT CLASS & METHOD ***/
 // cannot be directly instantiate with the new operator
 abstract absClassName {     // class must be abstract if contains abstruct methods
     abstract void methodName(int parameter);        // abstract method, subclass must override it
@@ -238,6 +256,22 @@ class Client implements Callback {
     public void newName(int parameter) {;}
     public String getString() {return "Logic here";}        // interface method overriding
 }
+
+// generic inteface
+interface Min<T extends Comparable<T>> {    // type parameter is T, upper bound is Comparable
+    T min();
+}
+class MyClass<T extends Comparable<T>> implements Min<T> {
+    T[] vals;
+    MyClass(T[] obj) { vals = obj; }
+    public Y min() {
+        T v = vals[0];
+        for (int i = 1; i < vals.length; i++) {
+            if (vals[i].compareTo(v) < 0) v = vals[i];
+        return v;
+    }
+}
+
 // interface reference variable
 Callback call = new Client();       // call can be used to acces callback method in Client class
 call.callback(42);      // but cannot access newName method, only methods declared by its interface
@@ -257,6 +291,83 @@ class B implements A.NestedIF {     // class B implements the nested interface
 A.NestedIF nif = new B();
 if (nif.isNotNefative(10))
     System.out.println("Logic here");
+
+
+/*** GENERICS PARAMETERIZED TYPES ***/
+// generic class cannot extend Throwable
+class Generics<Type> {      // Type is a parameter that will be replaced by a real type, can take two+ params
+    static Type objWrong;       // wrong, no static vars of type Type
+    static Type getWrong(){;}       // wrong, no static method can use Type
+    // Type valsWrong[] = new Type[10]; wrong, cannot instantiate an array whose elem type is a type param
+    Type valsCorrect[]; valsCorrect = nums;     // correct, assign reference to existent array
+    // Generics<Integer> gensWrong[] = new Generics<>[10}; wrong, cannot create an array of type-specific gen
+    Generics<?> gensCorrect = new Generics<?>[10];
+
+    Type objName;
+    Generics(Type obj) {
+        objName = obj;
+    }
+    Type getObj() {     // pass the constructor a reference to an object of type Type
+        return objName;
+    }
+    void showType() {
+        System.out.println("Type is: " + objName.getClass().getName());
+    }
+}
+public static void main(String args[]) {
+    Generics<Integer> iOb;      // create a reference for Integers
+    iOb = new Generics<Integer>(88);        // create a new obj, use autoboxing  to encapsulate int
+    iOb.showType();
+    int value = iOb.getObj();
+}
+
+// Bounded types
+class Stats<T extends Number> {     // type argument must be either Number or a class derived from it
+    T[] nums;
+    Stats(T[] o) {      // pass the constructor a ref to an array of type Number or subclass
+        nums = o;
+    }
+    double average() {
+        double sum = 0.0;
+        for (int i = 0; i < nums.length; i++)
+            sum += nums[i].doubleValue();
+        return sum / nums.length;
+    }
+    boolean sameAvg(Stats<? extends Stats> ob) {      // wildcard argument, Stats<?> matches any Stats obj...
+        if (average() == ob.average())      // or a class derived from Stats
+            return true;
+        return false;
+    }
+}
+public static void main(String args[]) {
+    Integer inums[] = {1, 2, 3};
+    Stats<Integer> iOb = new Stats<Integer>(inums);
+    double v = iOb.average();
+}
+
+class Gen<T extends MyClass & MyInterface> {;}      // T is bounded by a class MyClass and an inteface...
+// MyInterface. Any type argument passed to T must be a subclass of MyClass and implement MyInterface
+
+// generic superclass
+class GenOne<T> {
+    T obj;
+    GenOne(T objArg) {
+        obj = objArg; }
+}
+class GenTwo<T> extends GenOne<T> {
+    GenTwo(T objArg) {
+        super(objArg); }
+}
+GenTwo<Integer> num = new GenTwo<Integer>(100);
+
+class GenThree<T, V> extends GenOne<T> {        // subclass add its own type parameter
+    V objTwo;
+    GenThree(T objArgOne, V objArgTwo) {
+        super(objArgOne);
+        objTwo = objArgTwo; }
+}
+GenThree<String, Integer> x = new GenThree<String, Integer>("Value is:", 99);
+GenThree<String, Integer> x = new GenThree<>("Value is:", 99);      // short hand notation
 
 
 /*** EXCEPTION HANDLING ***/
@@ -295,6 +406,20 @@ public static void main(String args[]) {
         System.out.println("This will be printed second");
     }
 }
+
+
+/*** LANBDA EXPRESSION & CLOSURES ***/
+
+
+
+
+/*** ANNOTATION ***/
+
+
+
+/*** JAVA NATIVE INTERFACE ***/
+// include C/C++ libs
+
 
 
 /*** MULTITHREADING ***/
@@ -448,76 +573,4 @@ public static void main(String args[]) {
     new Producer(Q);
     new Consumer(Q);
 }
-
-
-/*** GENERICS PARAMETERIZED TYPES ***/
-class Generics<Type> {      // Type is a parameter that will be replaced by a real type, can take two+ params
-    Type objName;
-    Generics(Type obj) {
-        objName = obj;
-    }
-    Type getObj() {     // pass the constructor a reference to an object of type Type
-        return objName;
-    }
-    void showType() {
-        System.out.println("Type is: " + objName.getClass().getName());
-    }
-}
-public static void main(String args[]) {
-    Generics<Integer> iOb;      // create a reference for Integers
-    iOb = new Generics<Integer>(88);        // create a new obj, use autoboxing  to encapsulate int
-    iOb.showType();
-    int value = iOb.getObj();
-}
-
-// Bounded types
-class Stats<T extends Number> {     // type argument must be either Number or a class derived from it
-    T[] nums;
-    Stats(T[] o) {      // pass the constructor a ref to an array of type Number or subclass
-        nums = o;
-    }
-    double average() {
-        double sum = 0.0;
-        for (int i = 0; i < nums.length; i++)
-            sum += nums[i].doubleValue();
-        return sum / nums.length;
-    }
-    boolean sameAvg(Stats<?> ob) {      // wildcard argument, Stats<?> matches any Stats obj
-        if (average() == ob.average())
-            return true;
-        return false;
-    }
-}
-public static void main(String args[]) {
-    Integer inums[] = {1, 2, 3};
-    Stats<Integer> iOb = new Stats<Integer>(inums);
-    double v = iOb.average();
-}
-
-class Gen<T extends MyClass & MyInterface> {;}      // T is boubnded by a class MyClass and an inteface...
-// MyInterface. Any type argument passed to T must be a subclass of MyClass and implement MyInterface
-
-
-
-/*** ANNOTATION ***/
-
-
-
-
-/*** STREAMS ***/
-BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-String str[] = new String[100];
-for (int i = 0; i < 100; i++) {
-    str[i] = br.readLine();
-    if (str[i].equals("stop"))
-        break;
-}
-
-
-/*** JAVA NATIVE INTERFACE ***/
-// include C/C++ libs
-
-
-/***  ***/
-
 
