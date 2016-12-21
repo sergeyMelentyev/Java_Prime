@@ -408,8 +408,70 @@ public static void main(String args[]) {
 }
 
 
-/*** LANBDA EXPRESSION & CLOSURES ***/
+/*** LAMBDA EXPRESSION & CLOSURES ***/
+// can use and modify an instance var from invoking class, cannot use local vars of its enclosing scope
+interface NumericTest {     // function interface
+    boolean test(int n); }
+public static void main(String args[]) {        // lambda expression
+    NumericTest isEven = (n) -> (n % 2) == 0;
+    if (isEven.test(10)) System.out.println("Logic here");
+    NumericTest isNonNeg = (n) -> n >= 0;
+    if (isNonNeg.test(10)) System.out.println("Logic here");
+}
 
+interface NumericFunc {     // function interface
+    int func(int n); }
+public static void main(String args[]) {        // block lambda
+    NumericFunc factorial = (n) -> {
+        int result = 1;
+        for (int i = 1; i <= n; i++)
+            result *= i;
+        return result;
+    };
+}
+
+interface SomeFunc<Type> {     // generic function interface
+    Type func(Type arg); }
+public static void main(String args[]) {
+    SomeFunc<String> reverse = (str) -> {        // block lambda with String arg
+        String result = ""; int i;
+        for (i = str.length()-1; i >= 0; i--)
+            result += str.charAt(i);
+        return result;
+    };
+    SomeFunc<Integer> factorial = (n) -> {        // block lambda with Integer arg
+        int result =1;
+        for (int i = 1; i <= n; i++)
+            result *= i;
+        return result;
+    };
+}
+
+interface StringFunc {
+    String func(String n); }
+class LambdaAsArg {
+    static String stringOperation(StringFunc sf, String s) { return sf.func(s); }       // method has a...
+    // func interface as the type of its first param 
+}
+public static void main(String args[]) {
+    String inStr = "Lambda";
+    String outStr = stringOperation((str) -> str.toUpperCase(), inStr);        // expression lambda
+    
+    String outStr = stringOperation((str) -> {      // block lambda
+                                    String result = ""; int i;
+                                    for (i = str.length()-1; i >= 0; i--)
+                                        result += str.charAt(i);
+                                    return result;
+                                    }, inStr);
+    
+    StringFunc reverse = (str) -> {     // pass an instance created by an earlier lambda exp
+        String result = ""; int i;
+        for (i = str.length()-1; i >= 0; i--)
+            result += str.charAt(i);
+        return result;
+    };
+    String x = stringOperation(reverse, inStr);
+}
 
 
 
