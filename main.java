@@ -9,11 +9,17 @@ private;        // cannot be seen outside of its class
 protected;      // can be seen outside current package, but only for your subclasses
 // no explicit access = visible to subclasses as well as to other classes in the same package
 
-volatile;       // var can be changed unexpectedly
+volatile int a;       // var can be changed unexpectedly
 strictfp class MyClass {}       // use origional floating point model 
 class A {
     transient int a;        // contents of var will not be saved if obj written to a pesistent storage
     int b;  }       // will persist
+
+
+/*** MANUAL GC ***/
+System.gc();
+Runtime.getRuntime().gc
+protected void finalize() throws Throwable      // method will be called before GC
 
 
 /*** TYPE CASTING and INSTANCEOF ***/
@@ -56,20 +62,22 @@ final int FILE_NEW = 1;
 /*** OBJECT CALL-BY-REFERENCE ***/
 // all objects are subclasses of one super class named Object
 Object clone();     // creates a new same obj
-boolean equals(Object obj);     // if one obj is equal to another
-String toString();      // returns a string that describes th obj
+String toString();      // returns a string that describes the obj
 
 
 /*** STRING IMMUTABLE OBJECT ***/
 // strings are not arrays of chars
 String name = "Name";
-System.out.println("Name: " + name);
 
 
 /*** STRING_BUFFER STRING_BUILDER ***/
 
 
 /*** STREAMS ***/
+BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+String num1 = reader.readLine();
+int a = Integer.parseInt(num1);
+
 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 String str[] = new String[100];
 for (int i = 0; i < 100; i++) {
@@ -99,10 +107,7 @@ final int compareTo(enum-type e);       // compare the orginal values, both must
 
 
 /*** TEST CONDITION ***/
-if (age < 35) { 
-	System.out.println("Logic here");
-} else { System.out.println("Logic here"); }
-
+boolean equals(Object obj);     // if one obj is equal to another
 expressionOne ? expressionTwo : expressionThree;        // ternary operator
 
 
@@ -112,6 +117,7 @@ int[] arrName = new int[10];        // declaration and allocation equivalent
 int[] arrOne, arrTwo, arrThree;     // several array declaration
 int arrOne[], arrTwo[], arrThree[];     // several array declaration equivalent
 int month[] = {31,28,31,30};        // a new array initializer
+int count = month.length;       // array length
 
 int multi[][] = new int[2][3];      // alloc of array of arrays of int, 2 dimentions whith 3 values
 int[][] multi = new int[2][3];      // declaration and allocation equivalent
@@ -157,8 +163,8 @@ outer: for (;;) {       // named break and continue
 
 /*** CLASS ***/
 // as soon as class is loaded, all of the static statements are run, from top to down
-public class ClassName {		// defining a class
-	static int a = 3;
+public class ClassName {
+	static int a = 3;      // one static var for all instances exist as long as ClassName exist
     private String handleName;		// private instance variable, remain private to ClassName
 	private int startLives;
 	
@@ -172,9 +178,10 @@ public class ClassName {		// defining a class
     public ClassName(ClassName ob) {        // pass object to constructor
         this.handleName = ob.name;
         this.startLives = ob.lives; }
-    
     <T extends Number> ClassName(T arg) {       // generic constructor
         startLives = arg.intValue(); }
+
+    public static void anyNewName(){;}      // cannot access instance vars, connot use this
 
     final void anyName(){;}     // prevent overriding, method or class cannot be overridden
 
@@ -189,7 +196,8 @@ public class ClassName {		// defining a class
 
     class InnerClass {      // nested class, has directly access to all outer vars / methods
         void display() {
-            System.out.println("Logic here"); } }
+            System.out.println("Logic here"); } 
+    }
 
     static <T extends Comparable<T>, V extends T> boolean isInt(T x, V[] y) {   // static generic method...
         for (int i = 0; i < y.length; i++) {        // can be called independently with any obj...
@@ -197,6 +205,16 @@ public class ClassName {		// defining a class
         return false;
     }
 }
+
+// regular method how it works
+Cat cat = new Cat();        // Cat cat = new Cat();
+String name = cat.getName();        // String name = Cat.getName(cat);
+cat.setAge(17);     // Cat.setAge(cat, 17);
+cat.setChildren(cat1, cat2, cat3);      // Cat.setChildren(cat, cat1, cat2, cat3);
+
+// static method how it works
+Cat cat1 = new Cat();       // Cat cat1 = new Cat();
+int catCount = Cat.getAllCatsCount();       // int catCount = Cat.getAllCatsCount(null);
 
 // inheritens
 public class SubClassName extends ClassName {       // cannot inherite private members
