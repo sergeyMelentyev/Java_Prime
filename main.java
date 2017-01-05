@@ -67,7 +67,37 @@ String toString();      // returns a string that describes the obj
 
 /*** STRING IMMUTABLE OBJECT ***/
 // strings are not arrays of chars
-String name = "Name";
+String name = "Name";       // will be saved in special string pull
+String name = new String("Name");     // will not be saved in pull
+String str = String.format("text %d text %s", intVar, strVar);      // string format
+
+String s ="very .... long string from file";        // will take 1Mb (for example)
+String sub1 = s.substring(2,4);     // will use the same memory (1Mb) as first string
+String sub2 = new String(s.substring(2,4));     // will use distinct array of 4 chars
+
+compareTo(String anotherString) // лексиграфическое сравнение строк
+compareToIgnoreCase(String str) // лексиграфическое сравнение строк без учета регистра символов
+concat(String str) // возвращает соединение двух строк
+contains(CharSequence s) // проверяет, входит ли указанная последовательность символов в строку
+endsWith(String suffix) // проверяет завершается ли строка указанным суффиксом
+startsWith(String prefix) // проверяет, начинается ли строка с указанного префикса
+startsWith(String prefix, int toffset) // начинается ли строка в указанной позиции с указанного префикса
+equals(Object anObject) // проверяет идентична ли строка указанному объекту
+getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin) // символьное представление участка строки
+indexOf(int ch) // поиск первого вхождения символа в строке
+indexOf(int ch, int fromIndex) // поиск первого вхождения символа в строке с указанной позиции
+indexOf(String str) // поиск первого вхождения указанной подстроки
+indexOf(String str, int fromIndex) // поиск первого вхождения указанной подстроки с указанной позиции
+lastIndexOf(int ch) // поиск последнего входения символа
+lastIndexOf(int ch, int fromIndex) // поиск последнего входения символа с указанной позиции
+lastIndexOf(String str) // поиск последнего вхождения строки
+lastIndexOf(String str, int fromIndex) // поиск последнего вхождения строки с указанной позиции
+replace(char oldChar, char newChar) // замена в строке одного символа на другой
+replace(CharSequence target, CharSequence replacement) // замена одной подстроки другой
+substring(int beginIndex, int endIndex) // возвратить подстроку как строку
+toLowerCase() // преобразовать строку в нижний регистр
+toUpperCase() // преобразовать строку в верхний регистр
+trim() // отсечь на концах строки пустые символы
 
 
 /*** STRING_BUFFER STRING_BUILDER ***/
@@ -78,12 +108,11 @@ BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 String num1 = reader.readLine();
 int a = Integer.parseInt(num1);
 
-BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-String str[] = new String[100];
-for (int i = 0; i < 100; i++) {
-    str[i] = br.readLine();
-    if (str[i].equals("stop"))
-        break;
+BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+int[] list = new int[10];
+for (int i = 0; i < list.length; i++) {
+    String s = reader.readLine();
+    list[i] = Integer.parseInt(s);
 }
 
 
@@ -112,18 +141,81 @@ expressionOne ? expressionTwo : expressionThree;        // ternary operator
 
 
 /*** ARRAY ***/
-int arrName[] = new int[10];        // declaration and allocation of array
-int[] arrName = new int[10];        // declaration and allocation equivalent
+// cannot change its length
+int arrName[] = new int[10];        // declaration and allocation of array of int 10 elements
+int[] arrName = new int[10];        // declaration and allocation equivalent of array of int 10 elements
+arrName = new int[5];       // the same var but with new length
 int[] arrOne, arrTwo, arrThree;     // several array declaration
 int arrOne[], arrTwo[], arrThree[];     // several array declaration equivalent
-int month[] = {31,28,31,30};        // a new array initializer
 int count = month.length;       // array length
+Point p = new Point(1,3); Point[] arr = {p, new Point(2,2), null, p};     // array initializer
 
 int multi[][] = new int[2][3];      // alloc of array of arrays of int, 2 dimentions whith 3 values
 int[][] multi = new int[2][3];      // declaration and allocation equivalent
 int multi[][] = {{2,3},{3,4}};      // array of arrays initializer
 
-ArrayList<int> arrName = new ArrayList<>();		// initialize a new array list
+
+/*** COLLECTIONS SET, HASHSET ***/
+// unordered collection
+Set<String> set = new HashSet<String>(); set.add("Mama"); set.add("Mila");
+Iterator<String> iterator = set.iterator();     // get iterator for set
+while (iterator.hasNext())      // check if next element is exist
+    String text = iterator.next();
+// set can be itereted with shorthand notation (the same as iterator object)
+for (String text : set)
+    System.out.println(text);
+
+
+/*** COLLECTIONS SET, TREESET ***/
+
+
+/*** COLLECTIONS SET, SORTEDSET ***/
+
+
+/*** COLLECTIONS MAP, HASHMAP ***/
+// key-value pares
+Map<String, String> map = new HashMap<String, String>(); map.put("first", "Mama");
+Iterator<Map.Entry<String, String>> iterator = map.entrySet().iterator();
+while (iterator.hasNext()) {
+    Map.Entry<String, String> pair = iterator.next();
+    String key = pair.getKey();
+    String value = pair.getValue();
+}
+// map can be itereted with shorthand notation (the same as iterator object)
+for (Map.Entry<String, String> pair : map.entrySet()) {
+    String key = pair.getKey();
+    String value = pair.getValue();
+}
+
+
+/*** COLLECTIONS MAP, TREEMAP ***/
+
+
+/*** COLLECTIONS MAP, HASHTABLE ***/
+
+
+/*** COLLECTIONS LIST, ARRAYLIST ***/
+// ordered collection, can change its length
+ArrayList<String> list = new ArrayList<String>();
+int n = list.size(); String s = list.get(3); list.set(3, s);
+list.add(s); list.add(15, s); list.remove(3);
+
+List<String> list = new ArrayList<String>(); list.add("Mama"); list.add("Mila");
+Iterator<String> iterator = list.iterator();
+while (iterator.hasNext()) {
+    String text = iterator.next();
+// list can be itereted with shorthand notation (the same as iterator object)
+for (String text : list)
+    System.out.println(text);
+
+
+/*** COLLECTIONS LIST, LINKEDLIST ***/
+
+
+/*** COLLECTIONS LIST, VECTOR ***/
+
+
+/*** COLLECTIONS LIST, STACK ***/
 
 
 /*** CONTROL STATEMENT ***/
@@ -139,11 +231,10 @@ switch (expression) {       // switch statements can be nested
         statement; }
 
 while (boolean_expression) {		// use break/continue
-	System.out.println("Logic here"); }
-
+	System.out.println("Logic here"); 
+}
 do { System.out.println("Logic here"); 		// do-while
 	} while (boolean_expression);
-
 for(int i = 0; i < 5; i++) {		// for-in loop
 	System.out.println(i); }
 for (int i = 0, int x = 10; i < x; i++, x--) {
@@ -318,7 +409,7 @@ class Generics<Type> {      // Type is a parameter that will be replaced by a re
     static Type getWrong(){;}       // wrong, no static method can use Type
     // Type valsWrong[] = new Type[10]; wrong, cannot instantiate an array whose elem type is a type param
     Type valsCorrect[]; valsCorrect = nums;     // correct, assign reference to existent array
-    // Generics<Integer> gensWrong[] = new Generics<>[10}; wrong, cannot create an array of type-specific gen
+    // Generics<Integer> gensWrong[] = new Generics<>[10]; wrong, cannot create an array of type-specific gen
     Generics<?> gensCorrect = new Generics<?>[10];
 
     Type objName;
@@ -334,7 +425,7 @@ class Generics<Type> {      // Type is a parameter that will be replaced by a re
 }
 public static void main(String args[]) {
     Generics<Integer> iOb;      // create a reference for Integers
-    iOb = new Generics<Integer>(88);        // create a new obj, use autoboxing  to encapsulate int
+    iOb = new Generics<Integer>(88);        // create a new obj, use autoboxing to encapsulate int
     iOb.showType();
     int value = iOb.getObj();
 }
