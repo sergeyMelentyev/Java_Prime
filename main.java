@@ -129,8 +129,8 @@ enum Apple {
     Apple(int p) { price = p; }     // constructor called once for each enum constant
     int getPrice() { return price; }
 }
-for (Apple a : Apple.values()) {
-    System.out.println("Logic here" + a.getPrice());   }
+for (Apple a : Apple.values())
+    System.out.println("Logic here" + a.getPrice());
 final int ordinal();        // return ordinal value of the invoking const, from 0 to ...
 final int compareTo(enum-type e);       // compare the orginal values, both must from the same enum
 
@@ -156,11 +156,12 @@ int multi[][] = {{2,3},{3,4}};      // array of arrays initializer
 
 
 /*** COLLECTIONS SET, HASHSET ***/
-// unordered collection
-Set<String> set = new HashSet<String>(); set.add("Mama"); set.add("Mila");
+// unordered collection of unique items
+HashSet<String> set = new HashSet<>(); set.add("Mama"); set.add("Mila");
+size(), add(), addAll(), remove(), removeAll(), contains(), containsAll();
 Iterator<String> iterator = set.iterator();     // get iterator for set
 while (iterator.hasNext())      // check if next element is exist
-    String text = iterator.next();
+    String text = iterator.next();      // iterator.remove() current item
 // set can be itereted with shorthand notation (the same as iterator object)
 for (String text : set)
     System.out.println(text);
@@ -173,8 +174,11 @@ for (String text : set)
 
 
 /*** COLLECTIONS MAP, HASHMAP ***/
-// key-value pares
-Map<String, String> map = new HashMap<String, String>(); map.put("first", "Mama");
+// key-value pairs
+HashMap<String, String> map = new HashMap<>(); map.put("first", "Mama");
+entrySet(), keySet(), values(), put(key, value), get(key), containsKey(key)
+containsValue(value), isEmpty(), clear(), remove(key)
+
 Iterator<Map.Entry<String, String>> iterator = map.entrySet().iterator();
 while (iterator.hasNext()) {
     Map.Entry<String, String> pair = iterator.next();
@@ -200,7 +204,7 @@ ArrayList<String> list = new ArrayList<String>();
 int n = list.size(); String s = list.get(3); list.set(3, s);
 list.add(s); list.add(15, s); list.remove(3);
 
-List<String> list = new ArrayList<String>(); list.add("Mama"); list.add("Mila");
+ArrayList<String> list = new ArrayList<String>(); list.add("Mama"); list.add("Mila");
 Iterator<String> iterator = list.iterator();
 while (iterator.hasNext()) {
     String text = iterator.next();
@@ -591,6 +595,11 @@ public static void main(String args[]) {
 /*** JAVA NATIVE INTERFACE ***/
 // include C/C++ libs
 
+
+/*** DATE OBJECT ***/
+Date currentTime = new Date();
+Date newTime = new Date();
+long msDelay = newTime.getTime() - currentTime.getTime();
 
 
 /*** MULTITHREADING ***/
