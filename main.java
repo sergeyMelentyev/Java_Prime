@@ -159,12 +159,26 @@ int multi[][] = {{2,3},{3,4}};      // array of arrays initializer
 // unordered collection of unique items
 HashSet<String> set = new HashSet<>(); set.add("Mama"); set.add("Mila");
 size(), add(), addAll(), remove(), removeAll(), contains(), containsAll();
-Iterator<String> iterator = set.iterator();     // get iterator for set
-while (iterator.hasNext())      // check if next element is exist
-    String text = iterator.next();      // iterator.remove() current item
+
 // set can be itereted with shorthand notation (the same as iterator object)
 for (String text : set)
     System.out.println(text);
+
+Iterator<String> iterator = set.iterator();     // get iterator for set
+while (iterator.hasNext())      // check if next element is exist
+    String text = iterator.next();      // iterator.remove() current item
+
+// using for loop for iteration over set
+for (Iterator<Integer> i = set.iterator(); i.hasNext();)
+    Integer element = i.next();     // logic omitted
+
+// remove first element
+Iterator<Cat> iterator = cats.iterator(); cats.remove(iterator.next());
+
+// add and remove all specific elements
+Set<Object> result = new HashSet<>();
+result.addAll(Set<Cat> obj1); result.addAll(Set<Dog> obj2);     // data type should be omitted
+result.removeAll(Set<Cat> obj1);
 
 
 /*** COLLECTIONS SET, TREESET ***/
@@ -208,9 +222,13 @@ ArrayList<String> list = new ArrayList<String>(); list.add("Mama"); list.add("Mi
 Iterator<String> iterator = list.iterator();
 while (iterator.hasNext()) {
     String text = iterator.next();
+
 // list can be itereted with shorthand notation (the same as iterator object)
 for (String text : list)
     System.out.println(text);
+
+// array sorting
+Arrays.sort(array); Arrays.sort(array, Collections.reverseOrder());
 
 
 /*** COLLECTIONS LIST, LINKEDLIST ***/
