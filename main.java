@@ -772,3 +772,14 @@ public static void main(String args[]) {
     new Consumer(Q);
 }
 
+	
+	
+	/*** ***/
+public static void processExceptions() throws FileSystemException {
+    try {
+        methodThrowExceptions();
+    } catch (FileSystemException e) {
+        methodname(e);
+        throw e;        // throw exception further
+    } catch (IOException e) { method(e); }
+}
