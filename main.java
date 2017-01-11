@@ -23,7 +23,8 @@ protected void finalize() throws Throwable      // method will be called before 
 
 
 /*** TYPE CASTING and INSTANCEOF ***/
-varName = (byte) varNewName;
+Object objName = "string";        // no type casting
+String strName = (String) objName;
 if (objA instanceof ClassA) {;}     // true or false
 
 
@@ -31,7 +32,8 @@ if (objA instanceof ClassA) {;}     // true or false
 byte, short, int, long varName;     // width 8,16,32,64-bit
 char = 'a';     // width 16-bit
 float, double time = 1.2;       // width 32,64-bit
-boolean oldy = (age > 35);
+boolean oldy = (age > 35);      // width 8-bit
+Object objName;     // width 32-bit
 
 
 /*** TYPE WRAPPERS BOXING/UNBOXING OBJECTS ***/
@@ -252,18 +254,18 @@ switch (expression) {       // switch statements can be nested
     default:
         statement; }
 
-while (boolean_expression) {		// use break/continue
-	System.out.println("Logic here"); 
+while (boolean_expression) {        // use break/continue
+    System.out.println("Logic here"); 
 }
-do { System.out.println("Logic here"); 		// do-while
-	} while (boolean_expression);
-for(int i = 0; i < 5; i++) {		// for-in loop
-	System.out.println(i); }
+do { System.out.println("Logic here");      // do-while
+    } while (boolean_expression);
+for(int i = 0; i < 5; i++) {        // for-in loop
+    System.out.println(i); }
 for (int i = 0, int x = 10; i < x; i++, x--) {
     System.out.println(i); }
 
-for (int item : arrayListName) {		// for-each loop
-	System.out.println(item); }
+for (int item : arrayListName) {        // for-each loop
+    System.out.println(item); }
 for (int x[]: ArrayList) {      // multidimentional array
     for (int y : x) {
         System.out.println("Logic here"); } }
@@ -277,17 +279,17 @@ outer: for (;;) {       // named break and continue
 /*** CLASS ***/
 // as soon as class is loaded, all of the static statements are run, from top to down
 public class ClassName {
-	static int a = 3;      // one static var for all instances exist as long as ClassName exist
-    private String handleName;		// private instance variable, remain private to ClassName
-	private int startLives;
-	
-	public ClassName() {		// constructor
-		this("Unknown player"); }
-	public ClassName(String name) {		// constructor with different signature
-		this(name, 3);	}
-	public ClassName(String name, int lives) {		// constructor with different signature
-		this.handleName = name;
-		this.startLives = lives; }
+    static int a = 3;      // one static var for all instances exist as long as ClassName exist
+    private String handleName;      // private instance variable, remain private to ClassName
+    private int startLives;
+    
+    public ClassName() {        // constructor
+        this("Unknown player"); }
+    public ClassName(String name) {     // constructor with different signature
+        this(name, 3);  }
+    public ClassName(String name, int lives) {      // constructor with different signature
+        this.handleName = name;
+        this.startLives = lives; }
     public ClassName(ClassName ob) {        // pass object to constructor
         this.handleName = ob.name;
         this.startLives = ob.lives; }
@@ -301,10 +303,10 @@ public class ClassName {
     static {
         System.out.println("Logic here"); }     // static block executed once when the class is first loaded
 
-	public String getHandeName() {		// getter method for every field
-		return handleName; }
-	public void setHandleName(String name) {		// setter method for every field
-		this.handleName = name; }
+    public String getHandeName() {      // getter method for every field
+        return handleName; }
+    public void setHandleName(String name) {        // setter method for every field
+        this.handleName = name; }
     protected void finalize() {}        // runtime will call this method before destroy the obj
 
     class InnerClass {      // nested class, has directly access to all outer vars / methods
@@ -331,14 +333,14 @@ int catCount = Cat.getAllCatsCount();       // int catCount = Cat.getAllCatsCoun
 
 // inheritens
 public class SubClassName extends ClassName {       // cannot inherite private members
-	SubClassName(String name, int lives) {		// call closest super class constructor
-		super(name, lives);   }
+    SubClassName(String name, int lives) {      // call closest super class constructor
+        super(name, lives);   }
     SubClassName(SubClassName ob) {     // passed obh SubClassName to super constr that receives ClassName
         super(ob);  }       // super class variable can be used to reference any obj derived from that class
 
-	@Override
-	public void methodName(int parameter) {		// override super class method, same name and type signature
-		super.methodName(parameter / 2);  }
+    @Override
+    public void methodName(int parameter) {     // override super class method, same name and type signature
+        super.methodName(parameter / 2);  }
 }
 
 // this constructor
@@ -352,7 +354,7 @@ class NewClass {
         this(0); }
 }
 
-ClassName name = new ClassName();		// create a new instance
+ClassName name = new ClassName();       // create a new instance
 ClassName newName = new ClassName("Name");
 SubClassName anotherName = new SubClassName("Name", 5);
 
@@ -772,9 +774,13 @@ public static void main(String args[]) {
     new Consumer(Q);
 }
 
-	
-	
-	/*** ***/
+
+
+
+
+
+
+/*** ***/
 public static void processExceptions() throws FileSystemException {
     try {
         methodThrowExceptions();
