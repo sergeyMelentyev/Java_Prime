@@ -521,6 +521,12 @@ try {
     // block of code to executed after try block ends
 }
 
+catch (ArithmeticException e) {}      // divid by zero
+catch (NullPointerException e) {}       // access null pointer
+catch (ArrayIndexOutOfBoundsException e) {}     // access array out of bounds
+catch (IndexOutOfBoundsException e) {}      // access ArrayList out of bounds
+catch (FileSystemException e) { method(e); throw e; }        // throw exception further
+
 // throw exception explicitly
 class ThrowDemo {
     static void demoroc() throws IlligalAccessException {       // must include throws if...
@@ -774,18 +780,3 @@ public static void main(String args[]) {
     new Consumer(Q);
 }
 
-
-
-
-
-
-
-/*** ***/
-public static void processExceptions() throws FileSystemException {
-    try {
-        methodThrowExceptions();
-    } catch (FileSystemException e) {
-        methodname(e);
-        throw e;        // throw exception further
-    } catch (IOException e) { method(e); }
-}
