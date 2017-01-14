@@ -1,9 +1,11 @@
-/*** PACKAGE, ACCESS, MODIFIERS ***/
+                        /*** PACKAGE, ACCESS, MODIFIERS ***/
+
 package pcgName;        // statement defines a name space, must be stored in directory pcgName
 import java.util.Date;
 import java.io.*;
 import static java.lang.Math.pow;       // now pow() method can be used without full class name
 
+final int FILE_NEW = 1;     // constant
 public;     // can be accessed from anywhere
 private;        // cannot be seen outside of its class
 protected;      // can be seen outside current package, but only for your subclasses
@@ -16,19 +18,25 @@ class A {
     int b;  }       // will persist
 
 
-/*** MANUAL GC ***/
+
+                        /*** MANUAL GC ***/
+
 System.gc();
 Runtime.getRuntime().gc
 protected void finalize() throws Throwable      // method will be called before GC
 
 
-/*** TYPE CASTING and INSTANCEOF ***/
+
+                        /*** TYPE CASTING and INSTANCEOF ***/
+
 Object objName = "string";        // no type casting
 String strName = (String) objName;
 if (objA instanceof ClassA) {;}     // true or false
 
 
-/*** PRIMITIVE TYPE CALL-BY-VALUE ***/
+
+                        /*** PRIMITIVE TYPE CALL-BY-VALUE ***/
+
 byte, short, int, long varName;     // width 8,16,32,64-bit
 char = 'a';     // width 16-bit
 float, double time = 1.2;       // width 32,64-bit
@@ -36,7 +44,17 @@ boolean oldy = (age > 35);      // width 8-bit
 Object objName;     // width 32-bit
 
 
-/*** TYPE WRAPPERS BOXING/UNBOXING OBJECTS ***/
+
+                        /*** OBJECT CALL-BY-REFERENCE ***/
+
+// all objects are subclasses of one super class named Object
+Object clone();     // creates a new same obj
+String toString();      // returns a string that describes the obj
+
+
+
+                        /*** TYPE WRAPPERS BOXING/UNBOXING OBJECTS ***/
+
 Double, Float, Long, Integer, Short, Byte, Character, Boolean;
 Character(char ch);     // constuctor
 char charValue();       // return the encapsulated char
@@ -57,17 +75,52 @@ Integer iOb = 100;      // modern way to construct an Integer object
 int i = iOb;        // modern
 
 
-/*** CONSTANTS ***/
-final int FILE_NEW = 1;
+
+                        /*** TEST CONDITION ***/
+
+boolean equals(Object obj);     // if one obj is equal to another
+expressionOne ? expressionTwo : expressionThree;        // ternary operator
 
 
-/*** OBJECT CALL-BY-REFERENCE ***/
-// all objects are subclasses of one super class named Object
-Object clone();     // creates a new same obj
-String toString();      // returns a string that describes the obj
+
+                        /*** CONTROL STATEMENT ***/
+
+if (condition) statement;
+if (condition) {
+    statement; statement;
+} else if (condition) statement;
+
+switch (expression) {       // switch statements can be nested
+    case valeOne:       // can be of type byte, short, int, char, String
+        statement; break;
+    default:
+        statement; }
+
+while (boolean_expression) {        // use break/continue
+    System.out.println("Logic here"); 
+}
+do { System.out.println("Logic here");      // do-while
+    } while (boolean_expression);
+for(int i = 0; i < 5; i++) {        // for-in loop
+    System.out.println(i); }
+for (int i = 0, int x = 10; i < x; i++, x--) {
+    System.out.println(i); }
+
+for (int item : arrayListName) {        // for-each loop
+    System.out.println(item); }
+for (int x[]: ArrayList) {      // multidimentional array
+    for (int y : x) {
+        System.out.println("Logic here"); } }
+
+outer: for (;;) {       // named break and continue
+    for (;;) {
+        break outer;        // break will exit from inner loop, named break from outer loop
+    } }
 
 
-/*** STRING IMMUTABLE OBJECT ***/
+
+                        /*** STRING IMMUTABLE OBJECT ***/
+
 // strings are not arrays of chars
 String name = "Name";       // will be saved in special string pull
 String name = new String("Name");     // will not be saved in pull
@@ -102,10 +155,13 @@ toUpperCase() // преобразовать строку в верхний ре�
 trim() // отсечь на концах строки пустые символы
 
 
-/*** STRING_BUFFER STRING_BUILDER ***/
+
+                        /*** STRING_BUFFER STRING_BUILDER ***/
 
 
-/*** STREAMS ***/
+
+                        /*** STREAMS ***/
+
 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 String num1 = reader.readLine();
 int a = Integer.parseInt(num1);
@@ -118,7 +174,9 @@ for (int i = 0; i < list.length; i++) {
 }
 
 
-/*** ENUM CLASS TYPES ***/
+
+                        /*** ENUM CLASS TYPES ***/
+
 // can be compared using == and in switch statements
 enum LootType {POTION, RING}     // enumeration constants, public static final obj of its type
 LootType vaName = LootType.RING;
@@ -137,12 +195,9 @@ final int ordinal();        // return ordinal value of the invoking const, from 
 final int compareTo(enum-type e);       // compare the orginal values, both must from the same enum
 
 
-/*** TEST CONDITION ***/
-boolean equals(Object obj);     // if one obj is equal to another
-expressionOne ? expressionTwo : expressionThree;        // ternary operator
 
+                        /*** ARRAY ***/
 
-/*** ARRAY ***/
 // cannot change its length
 int arrName[] = new int[10];        // declaration and allocation of array of int 10 elements
 int[] arrName = new int[10];        // declaration and allocation equivalent of array of int 10 elements
@@ -157,39 +212,41 @@ int[][] multi = new int[2][3];      // declaration and allocation equivalent
 int multi[][] = {{2,3},{3,4}};      // array of arrays initializer
 
 
-/*** COLLECTIONS SET, HASHSET ***/
+
+                        /*** COLLECTIONS SET, HASHSET ***/
+
 // unordered collection of unique items
 HashSet<String> set = new HashSet<>(); set.add("Mama"); set.add("Mila");
 size(), add(), addAll(), remove(), removeAll(), contains(), containsAll();
 
-// set can be itereted with shorthand notation (the same as iterator object)
-for (String text : set)
+for (String text : set)     // iteration
     System.out.println(text);
 
 Iterator<String> iterator = set.iterator();     // get iterator for set
 while (iterator.hasNext())      // check if next element is exist
     String text = iterator.next();      // iterator.remove() current item
 
-// using for loop for iteration over set
-for (Iterator<Integer> i = set.iterator(); i.hasNext();)
+for (Iterator<Integer> i = set.iterator(); i.hasNext();)    // using for loop for iteration over set
     Integer element = i.next();     // logic omitted
 
-// remove first element
-Iterator<Cat> iterator = cats.iterator(); cats.remove(iterator.next());
+Iterator<Cat> iterator = cats.iterator(); cats.remove(iterator.next()); // remove first element
 
-// add and remove all specific elements
-Set<Object> result = new HashSet<>();
+Set<Object> result = new HashSet<>();       // add and remove all specific elements
 result.addAll(Set<Cat> obj1); result.addAll(Set<Dog> obj2);     // data type should be omitted
 result.removeAll(Set<Cat> obj1);
 
 
-/*** COLLECTIONS SET, TREESET ***/
+
+                        /*** COLLECTIONS SET, TREESET ***/
 
 
-/*** COLLECTIONS SET, SORTEDSET ***/
+
+                        /*** COLLECTIONS SET, SORTEDSET ***/
 
 
-/*** COLLECTIONS MAP, HASHMAP ***/
+
+                        /*** COLLECTIONS MAP, HASHMAP ***/
+
 // key-value pairs
 HashMap<String, String> map = new HashMap<>(); map.put("first", "Mama");
 entrySet(), keySet(), values(), put(key, value), get(key), containsKey(key)
@@ -201,20 +258,23 @@ while (iterator.hasNext()) {
     String key = pair.getKey();
     String value = pair.getValue();
 }
-// map can be itereted with shorthand notation (the same as iterator object)
-for (Map.Entry<String, String> pair : map.entrySet()) {
+for (Map.Entry<String, String> pair : map.entrySet()) {     // iteration
     String key = pair.getKey();
     String value = pair.getValue();
 }
 
 
-/*** COLLECTIONS MAP, TREEMAP ***/
+
+                        /*** COLLECTIONS MAP, TREEMAP ***/
 
 
-/*** COLLECTIONS MAP, HASHTABLE ***/
+
+                        /*** COLLECTIONS MAP, HASHTABLE ***/
 
 
-/*** COLLECTIONS LIST, ARRAYLIST ***/
+
+                        /*** COLLECTIONS LIST, ARRAYLIST ***/
+
 // ordered collection, can change its length
 ArrayList<String> list = new ArrayList<String>();
 int n = list.size(); String s = list.get(3); list.set(3, s);
@@ -225,58 +285,27 @@ Iterator<String> iterator = list.iterator();
 while (iterator.hasNext()) {
     String text = iterator.next();
 
-// list can be itereted with shorthand notation (the same as iterator object)
-for (String text : list)
+for (String text : list)        // iteration
     System.out.println(text);
 
-// array sorting
-Arrays.sort(array); Arrays.sort(array, Collections.reverseOrder());
+Arrays.sort(array); Arrays.sort(array, Collections.reverseOrder());     // array sorting
 
 
-/*** COLLECTIONS LIST, LINKEDLIST ***/
+
+                        /*** COLLECTIONS LIST, LINKEDLIST ***/
 
 
-/*** COLLECTIONS LIST, VECTOR ***/
+
+                        /*** COLLECTIONS LIST, VECTOR ***/
 
 
-/*** COLLECTIONS LIST, STACK ***/
+
+                        /*** COLLECTIONS LIST, STACK ***/
 
 
-/*** CONTROL STATEMENT ***/
-if (condition) statement;
-if (condition) {
-    statement; statement;
-} else if (condition) statement;
 
-switch (expression) {       // switch statements can be nested
-    case valeOne:       // can be of type byte, short, int, char, String
-        statement; break;
-    default:
-        statement; }
+                        /*** CLASSES ***/
 
-while (boolean_expression) {        // use break/continue
-    System.out.println("Logic here"); 
-}
-do { System.out.println("Logic here");      // do-while
-    } while (boolean_expression);
-for(int i = 0; i < 5; i++) {        // for-in loop
-    System.out.println(i); }
-for (int i = 0, int x = 10; i < x; i++, x--) {
-    System.out.println(i); }
-
-for (int item : arrayListName) {        // for-each loop
-    System.out.println(item); }
-for (int x[]: ArrayList) {      // multidimentional array
-    for (int y : x) {
-        System.out.println("Logic here"); } }
-
-outer: for (;;) {       // named break and continue
-    for (;;) {
-        break outer;        // break will exit from inner loop, named break from outer loop
-    } }
-
-
-/*** CLASS ***/
 // as soon as class is loaded, all of the static statements are run, from top to down
 public class ClassName {
     static int a = 3;      // one static var for all instances exist as long as ClassName exist
@@ -321,17 +350,10 @@ public class ClassName {
     }
 }
 
-// regular method how it works
-Cat cat = new Cat();        // Cat cat = new Cat();
-String name = cat.getName();        // String name = Cat.getName(cat);
-cat.setAge(17);     // Cat.setAge(cat, 17);
-cat.setChildren(cat1, cat2, cat3);      // Cat.setChildren(cat, cat1, cat2, cat3);
 
-// static method how it works
-Cat cat1 = new Cat();       // Cat cat1 = new Cat();
-int catCount = Cat.getAllCatsCount();       // int catCount = Cat.getAllCatsCount(null);
 
-// inheritens
+                        /*** CLASSES. INHERITENS ***/
+
 public class SubClassName extends ClassName {       // cannot inherite private members
     SubClassName(String name, int lives) {      // call closest super class constructor
         super(name, lives);   }
@@ -343,7 +365,29 @@ public class SubClassName extends ClassName {       // cannot inherite private m
         super.methodName(parameter / 2);  }
 }
 
-// this constructor
+
+
+                        /*** CLASSES. METHODS ***/
+
+static void anyMethodName (int ... args) {}     // variable-length argument, zero or more, as array of ints
+
+Cow cow = new Whale();      // Whale extends Cow, var cow of type Whale now can call onle Cow's methods
+if (cow instanceof Whale) { Whale whale = (Whale) cow; }        // type casting
+Whale whale = (Whale) cow;  // type casting without type checking, will generate InvalidClassCastException
+
+Cat cat = new Cat();        // Cat cat = new Cat();
+String name = cat.getName();        // String name = Cat.getName(cat);
+cat.setAge(17);     // Cat.setAge(cat, 17);
+cat.setChildren(cat1, cat2, cat3);      // Cat.setChildren(cat, cat1, cat2, cat3);
+
+// static method how it works
+Cat cat1 = new Cat();       // Cat cat1 = new Cat();
+int catCount = Cat.getAllCatsCount();       // int catCount = Cat.getAllCatsCount(null);
+
+
+
+                        /*** CLASSES. THIS CONSTRUCTOR ***/
+
 class NewClass {
     int a; int b;
     NewClass(int i, int i) {        // regular constructor, init a and b individually
@@ -354,6 +398,10 @@ class NewClass {
         this(0); }
 }
 
+
+
+                        /*** CLASSES. EXAMPLES ***/
+
 ClassName name = new ClassName();       // create a new instance
 ClassName newName = new ClassName("Name");
 SubClassName anotherName = new SubClassName("Name", 5);
@@ -363,34 +411,37 @@ dmdName = newName; dmdName.methodName      // dynamic method dispatch
 dmdName = anotherName; dmdName.methodName       // dynamic method dispatch
 
 
-/*** ABSTRACT CLASS & METHOD ***/
+
+                        /*** CLASSES. ABSTRACT CLASSES & METHODS ***/
+
 // cannot be directly instantiate with the new operator
 abstract absClassName {     // class must be abstract if contains abstruct methods
     abstract void methodName(int parameter);        // abstract method, subclass must override it
 }
 
 
-/*** METHOD ***/
-static void anyMethodName (int ... args) {}     // variable-length argument, zero or more, as array of ints
 
+                        /*** CLASSES. INTERFACE ***/
 
-/*** INTERFACE ***/
 interface SharedConstants {
     int NO = 0;     // variables in interface, must be init, will be in scope as constants
     int YES = 1;
 }
-interface Callback extends SharedConstants {
+interface Callback extends SharedConstants {    // interface can only inherit from interface (multiple)
     void callback(int parameter);       // interface method declaration, must be implemented in class
     default String getString() {return "Logic here";}        // default method with implementation
     static int getNumber() {return 0;}      // static method, no implementation required, not inherited
 }
-class Client implements Callback {
+class Client implements Callback, AnothreInterfaceName {        // multiple inheritance
     public void callback(int parameter) {;}     // must be public
     public void newName(int parameter) {;}
     public String getString() {return "Logic here";}        // interface method overriding
 }
 
-// generic inteface
+
+
+                        /*** CLASSES. GENERIC INTERFACE ***/
+
 interface Min<T extends Comparable<T>> {    // type parameter is T, upper bound is Comparable
     T min();
 }
@@ -426,7 +477,9 @@ if (nif.isNotNefative(10))
     System.out.println("Logic here");
 
 
-/*** GENERICS PARAMETERIZED TYPES ***/
+
+                        /*** GENERICS PARAMETERIZED TYPES ***/
+
 // generic class cannot extend Throwable
 class Generics<Type> {      // Type is a parameter that will be replaced by a real type, can take two+ params
     static Type objWrong;       // wrong, no static vars of type Type
@@ -454,7 +507,10 @@ public static void main(String args[]) {
     int value = iOb.getObj();
 }
 
-// Bounded types
+
+
+                        /*** GENERICS. BOUNDED TYPES ***/
+
 class Stats<T extends Number> {     // type argument must be either Number or a class derived from it
     T[] nums;
     Stats(T[] o) {      // pass the constructor a ref to an array of type Number or subclass
@@ -503,7 +559,9 @@ GenThree<String, Integer> x = new GenThree<String, Integer>("Value is:", 99);
 GenThree<String, Integer> x = new GenThree<>("Value is:", 99);      // short hand notation
 
 
-/*** EXCEPTION HANDLING ***/
+
+                        /*** EXCEPTION HANDLING ***/
+
 // Throwable (first branch) -> Exception -> RuntimeException
 // Throwable (second branch) -> Error
 try {
@@ -521,7 +579,7 @@ try {
     // block of code to executed after try block ends
 }
 
-catch (ArithmeticException e) {}      // divid by zero
+catch (ArithmeticException e) {}      // divided by zero
 catch (NullPointerException e) {}       // access null pointer
 catch (ArrayIndexOutOfBoundsException e) {}     // access array out of bounds
 catch (IndexOutOfBoundsException e) {}      // access ArrayList out of bounds
@@ -547,7 +605,9 @@ public static void main(String args[]) {
 }
 
 
-/*** LAMBDA EXPRESSION & CLOSURES ***/
+
+                        /*** LAMBDA EXPRESSION & CLOSURES ***/
+
 // can use and modify an instance var from invoking class, cannot use local vars of its enclosing scope
 interface NumericTest {     // function interface
     boolean test(int n); }
@@ -614,21 +674,25 @@ public static void main(String args[]) {
 
 
 
-/*** ANNOTATION ***/
+                        /*** ANNOTATION ***/
 
 
 
-/*** JAVA NATIVE INTERFACE ***/
+                        /*** JAVA NATIVE INTERFACE ***/
 // include C/C++ libs
 
 
-/*** DATE OBJECT ***/
+
+                        /*** DATE OBJECT ***/
+
 Date currentTime = new Date();
 Date newTime = new Date();
 long msDelay = newTime.getTime() - currentTime.getTime();
 
 
-/*** MULTITHREADING ***/
+
+                        /*** MULTITHREADING ***/
+
 // extending Thread superclass
 class NewThread extends Thread {
     NewThread() {
