@@ -162,16 +162,52 @@ trim() // отсечь на концах строки пустые символ�
 
                         /*** STREAMS ***/
 
+// read line from console
 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 String num1 = reader.readLine();
 int a = Integer.parseInt(num1);
-
+// read line from console
 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 int[] list = new int[10];
 for (int i = 0; i < list.length; i++) {
-    String s = reader.readLine();
-    list[i] = Integer.parseInt(s);
+    String s = reader.readLine(); list[i] = Integer.parseInt(s);
 }
+
+// read from file and write to file
+InputStream inStream = new FileInputStream("c:/source.txt");
+OutputStream outStream = new FileOutputStream("c:/result.txt");
+while (inStream.available() > 0) {
+    int data = inStream.read(); outStream.write(data);      // read and write one byte at a time
+}
+inStream.close(); outStream.close();
+
+// custom class for read and write streams
+class CustomReadWriteStreams {
+    private ArrayList<Integer> list;
+    public void write(int data) {
+        list.add(data);
+    }
+    public int read() {
+        int first = list.get(0);
+        list.remove(0);
+        return first;
+    }
+    public int available() {
+        return list.size();
+    }
+}
+CustomReadWriteStreams myObject = new CustomReadWriteStreams();     // write to file
+OutputStream outStream = new FileOutputStream ("c:/my-object-data.txt");
+while (myObject.available() > 0) {
+    int data = myObject.read(); outStream.write(data); }
+outStream.close();
+
+InputStream inStream = new FileInputStream("c:/my-object-data.txt");        // read from file
+CustomReadWriteStreams myObject = new CustomReadWriteStreams();
+while (inStream.available() > 0) {
+    int data = inStream.read();
+    myObject.write(data); }
+inStream.close();
 
 
 
@@ -424,8 +460,8 @@ abstract absClassName {     // class must be abstract if contains abstruct metho
                         /*** CLASSES. INTERFACE ***/
 
 interface SharedConstants {
-    int NO = 0;     // variables in interface, must be init, will be in scope as constants
-    int YES = 1;
+    int NO = 0;     // only as public final static
+    int YES = 1;        // variables in interface, must be init, will be in scope as constants
 }
 interface Callback extends SharedConstants {    // interface can only inherit from interface (multiple)
     void callback(int parameter);       // interface method declaration, must be implemented in class
