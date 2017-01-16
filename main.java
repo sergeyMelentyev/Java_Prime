@@ -31,7 +31,14 @@ protected void finalize() throws Throwable      // method will be called before 
 
 Object objName = "string";        // no type casting
 String strName = (String) objName;
-if (objA instanceof ClassA) {;}     // true or false
+if (objA instanceof ClassA) {;}     // true or false, including inheritance
+
+Object obj = new ChildObj();        // Object - GrandObj - ParentObj - ChildObj. Расширение типа.
+GrandObj obj = (GrandObj) obj;      // type casting must be applied
+ParetObj obj = (ParetObj) obj;
+
+ParetObj obj = new ChildObj();      // Сужение типа. No type casting is needed
+GrandObj obj = obj; Object obj = obj;
 
 
 
@@ -48,6 +55,7 @@ Object objName;     // width 32-bit
                         /*** OBJECT CALL-BY-REFERENCE ***/
 
 // all objects are subclasses of one super class named Object
+// object of specific type can be saved in variable with any of its parent type 
 Object clone();     // creates a new same obj
 String toString();      // returns a string that describes the obj
 
@@ -393,7 +401,7 @@ public class ClassName {
 public class SubClassName extends ClassName {       // cannot inherite private members
     SubClassName(String name, int lives) {      // call closest super class constructor
         super(name, lives);   }
-    SubClassName(SubClassName ob) {     // passed obh SubClassName to super constr that receives ClassName
+    SubClassName(SubClassName ob) {     // passed obj SubClassName to super constr that receives ClassName
         super(ob);  }       // super class variable can be used to reference any obj derived from that class
 
     @Override
@@ -446,6 +454,19 @@ ClassName dmdName;       // declaration of reference of type ClassName
 dmdName = newName; dmdName.methodName      // dynamic method dispatch
 dmdName = anotherName; dmdName.methodName       // dynamic method dispatch
 
+
+
+                        /*** CLASSES. SINGLETON PATTERN ***/
+
+public class Singleton {
+    static Singleton INSTANCE = null;
+    private Singleton() {}
+    static Singleton getInstance() {
+        if (INSTANCE==null) 
+            INSTANCE = new Singleton();
+        return INSTANCE;
+    }
+}
 
 
                         /*** CLASSES. ABSTRACT CLASSES & METHODS ***/
