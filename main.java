@@ -395,6 +395,44 @@ public class ClassName {
 }
 
 
+                        /*** CLASSES. INITIALIZATION ORDER ***/
+
+class Pet {
+    int x = 5, y = 5;       // <--- #2 variable initialization in base class
+    Pet(int x, int y){
+        this.x = x; this.y = y; }     // <--- #3 base class constructor work
+}
+class Cat extends Pet {
+    int tail = 8; int age;      // <--- #4 fields initialization
+    Cat(int x, int y, int age) {
+        super(x, y);        // <--- #1 call base class constructor
+        this.age = age; }    // <--- #5 class constructor work
+}
+Cat cat = new Cat (50, 50, 5);      // <--- #0 new instance created
+
+// fields initialization order
+class Cat {
+    public int a = getSum();
+    public int b = getSum() - a;
+    public int c = getSum() - a - b;
+    public getSum() { return a + b + c; }
+}
+// what will happend
+class Cat {
+    public int a = 0;
+    public int b = 0;
+    public int c = 0;
+    public Cat() {
+        super();
+        a = getSum();       // (a + b + c) = 0;
+        b = getSum() - a;       // (a + b + c) - a = b = 0;
+        c = getSum() - a - b;       // (a + b + c) - a - b = c = 0;
+    }
+    public getSum() { return a + b + c; }
+}
+
+
+
 
                         /*** CLASSES. INHERITENS ***/
 
@@ -467,6 +505,16 @@ public class Singleton {
         return INSTANCE;
     }
 }
+// singleton pattern lazy initialization
+public class Moon {
+    private static Moon instance;
+    private Moon(){}
+    public static Moon getInstance(){
+        if(instance == null)
+            instance = new Moon();
+        return instance;
+    }
+}
 
 
                         /*** CLASSES. ABSTRACT CLASSES & METHODS ***/
@@ -478,7 +526,7 @@ abstract absClassName {     // class must be abstract if contains abstruct metho
 
 
 
-                        /*** CLASSES. INTERFACE ***/
+                        /*** INTERFACES ***/
 
 interface SharedConstants {
     int NO = 0;     // only as public final static
