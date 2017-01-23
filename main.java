@@ -716,12 +716,10 @@ public static void main(String args[]) {
 // can use and modify an instance var from invoking class, cannot use local vars of its enclosing scope
 interface NumericTest {     // function interface
     boolean test(int n); }
-public static void main(String args[]) {        // lambda expression
-    NumericTest isEven = (n) -> (n % 2) == 0;
-    if (isEven.test(10)) System.out.println("Logic here");
-    NumericTest isNonNeg = (n) -> n >= 0;
-    if (isNonNeg.test(10)) System.out.println("Logic here");
-}
+NumericTest isEven = (n) -> (n % 2) == 0;   // lambda expression
+if (isEven.test(10)) System.out.println("Logic here");
+NumericTest isNonNeg = (n) -> n >= 0;
+if (isNonNeg.test(10)) System.out.println("Logic here");
 
 interface NumericFunc {     // function interface
     int func(int n); }
@@ -798,58 +796,43 @@ long msDelay = newTime.getTime() - currentTime.getTime();
 
                         /*** MULTITHREADING ***/
 
-// extending Thread superclass
-class NewThread extends Thread {
-    NewThread() {
-        super("Second Thread");
-        start(); }
-    public void run() {
-        try {
-            for (int i = 5; i > 0; i--)
-                Thread.sleep(500);
-        } catch (InterruptedException e) {
-            System.out.println("Error logic here"); }
-    }
+class Printer implements Runnable {     // interface
+    private String name;
+    public Printer(String name) { this.name = name; }
+    public void run() { System.out.println("I’m " + this.name); }
 }
-public static void main(String args[]) {
-    new Thread();       // create a new thread
-    try {
-        for (int i = 5; i > 0; i--)
-            Thread.sleep(1000);
-    } catch (InterruptedException e) {
-        System.out.println("Error logic here"); }
+public static void main(String[] args) {
+    Printer printer = new Printer("Принтер");
+    Thread thread = new Thread(printer); 
+    thread.start();
 }
 
-// implementing Runnable interface
-class NewThread implements Runnable {
-    String name;
-    Thread t;
-    NewThread(String threadName) {
-        name = threadName;
-        t = new Thread(this, name);
-        t.start();
-    }
+class Printer extends Thread {      // class extension
+    private String name;
+    public Printer(String name) { this.name = name; }
+    public void run() { System.out.println("I’m " + this.name); }
+}
+public static void main(String[] args) {
+    Printer printer = new Printer("Принтер");
+    printer.start();
+}
+
+class Clock implements Runnable {   // interapt thread, instanceName.interrupt();
     public void run() {
-        try {
-            for (int i = 5; i > 0; i--)
-                Thread.sleep(500);
-        } catch (InterruptedException e) {
-            System.out.println("Error logic here");
-        }
+        Thread current = Thread.currentThread();    // return pointer to a current thread
+        while (!current.isInterrupted()) {
+            boolean isCurrentThreadInterrupted = currentThread.isInterrupted(); // get current status
+            String threadName = cuurentThread.getName() // get current name
+            Thread.sleep(1000);
+            System.out.println("Tik"); }
     }
 }
-public static void main(String args[]) {
-    NewThread objOne = new NewThread("One");        // create a new thread
-    NewThread objTwo = new NewThread("Two");
-    System.out.println("Is alive: " + objOne.t.isAlive());      // true if thread is still running
-    try {
-        objOne.t.join();        // wait for a thread to finish
-        objTwo.t.join();
-        System.out.println("Main thread logic here");
-    } catch (InterruptedException e) {
-        System.out.println("Error logic here");
-    }
-}
+
+
+
+
+
+
 
 // synchronized methods, cannot be access by different threads at one time
 class Callme {
