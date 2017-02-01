@@ -1,21 +1,21 @@
                         /*** PACKAGE, ACCESS, MODIFIERS ***/
 
-package pcgName;        // statement defines a name space, must be stored in directory pcgName
+package pcgName;    // statement defines a name space, must be stored in directory pcgName
 import java.util.Date;
 import java.io.*;
-import static java.lang.Math.pow;       // now pow() method can be used without full class name
+import static java.lang.Math.pow;   // now pow() method can be used without full class name
 
-final int FILE_NEW = 1;     // constant
-public;     // can be accessed from anywhere
-private;        // cannot be seen outside of its class
-protected;      // can be seen outside current package, but only for your subclasses
-// no explicit access = visible to subclasses as well as to other classes in the same package
+final int NEW = 1;  // constant
+public; // can be accessed from anywhere
+private;    // cannot be seen outside of its class
+protected;  // can be seen outside current package, but only for your subclasses
+// no explicit access = visible to subclasses outside package and to other classes in the same package
 
-volatile int a;       // var can be changed unexpectedly
-strictfp class MyClass {}       // use origional floating point model 
+volatile int a; // var can be changed unexpectedly
+strictfp class MyClass {}   // use origional floating point model 
 class A {
-    transient int a;        // contents of var will not be saved if obj written to a pesistent storage
-    int b;  }       // will persist
+    transient int a;    // contents of var will not be saved if obj written to a pesistent storage
+    int b;  }   // will persist
 
 
 
@@ -23,102 +23,84 @@ class A {
 
 System.gc();
 Runtime.getRuntime().gc
-protected void finalize() throws Throwable      // method will be called before GC
+protected void finalize() throws Throwable  // method will be called before GC
 
 
 
                         /*** TYPE CASTING and INSTANCEOF ***/
 
-Object objName = "string";        // no type casting
-String strName = (String) objName;
-if (objA instanceof ClassA) {;}     // true or false, including inheritance
+if (objA instanceof ClassA) {;} // true or false, including inheritance
 
-Object obj = new ChildObj();        // Object - GrandObj - ParentObj - ChildObj. Расширение типа.
-GrandObj obj = (GrandObj) obj;      // type casting must be applied
+Object obj = new ChildObj();    // Object - GrandObj - ParentObj - ChildObj. Расширение типа.
+GrandObj obj = (GrandObj) obj;  // type casting must be applied
 ParetObj obj = (ParetObj) obj;
 
-ParetObj obj = new ChildObj();      // Сужение типа. No type casting is needed
+ParetObj obj = new ChildObj();  // Сужение типа. No type casting is needed
 GrandObj obj = obj; Object obj = obj;
 
 
 
                         /*** PRIMITIVE TYPE CALL-BY-VALUE ***/
 
-byte, short, int, long varName;     // width 8,16,32,64-bit
-char = 'a';     // width 16-bit
-float, double time = 1.2;       // width 32,64-bit
-boolean oldy = (age > 35);      // width 8-bit
-Object objName;     // width 32-bit
-
-
-
-                        /*** OBJECT CALL-BY-REFERENCE ***/
-
-// all objects are subclasses of one super class named Object
-// object of specific type can be saved in variable with any of its parent type 
-Object clone();     // creates a new same obj
-String toString();      // returns a string that describes the obj
+byte, short, int, long varName; // width 8,16,32,64-bit
+char = 'a'; // width 16-bit
+float, double time = 1.2;   // width 32,64-bit
+boolean oldy = (age > 35);  // width 8-bit
+Object objName; // width 32-bit
 
 
 
                         /*** TYPE WRAPPERS BOXING/UNBOXING OBJECTS ***/
 
 Double, Float, Long, Integer, Short, Byte, Character, Boolean;
-Character(char ch);     // constuctor
-char charValue();       // return the encapsulated char
+Character(char ch); // constuctor
+char charValue();   // return encapsulated char
 
-Boolean(boolean boolValue);     // constructor, true or false only
-Boolean(String boolString);     // constructor from String, takes "true" (upper or lower case)
-boolean booleanValue();     // return boolean equivalent of the invoking obj
+Boolean(boolean boolValue); // constructor, true or false only
+Boolean(String boolString); // constructor from String, takes "true" (upper or lower case)
+boolean booleanValue(); // return boolean equivalent of the invoking obj
 
-Integer(int num);       // constructor for all numeric values
-Integer(String str);        // must contain valid num value or NumberFormatException is thrown
-byte byteValue(); double doubleValue(); float floatValue();     // return value from obj wrapper
+Integer(int num);   // constructor for all numeric values
+Integer(String str);    // must contain valid num value or NumberFormatException is thrown
+byte byteValue(); double doubleValue(); float floatValue(); // return value from obj wrapper
 int intValue(); long longValue(); short shortValue();
 Integer iOb = new Integer(100);
 int i = iOb.intValue();
 
 // autoboxing, works with increments and in regular expressions
-Integer iOb = 100;      // modern way to construct an Integer object
-int i = iOb;        // modern
+Integer iOb = 100;  // modern way to construct an Integer object
+int i = iOb;    // modern
 
 
 
                         /*** TEST CONDITION ***/
 
-boolean equals(Object obj);     // if one obj is equal to another
-expressionOne ? expressionTwo : expressionThree;        // ternary operator
+boolean equals(Object obj); // if one obj is equal to another
+expressionOne ? expressionTwo : expressionThree;    // ternary operator
 
 
 
                         /*** CONTROL STATEMENT ***/
 
 if (condition) statement;
-if (condition) {
+if (condition)
     statement; statement;
-} else if (condition) statement;
+else if (condition) statement;
 
-switch (expression) {       // switch statements can be nested
-    case valeOne:       // can be of type byte, short, int, char, String
+switch (expression) {   // switch statements can be nested
+    case valeOne:   // can be of type byte, short, int, char, String
         statement; break;
     default:
         statement; }
 
-while (boolean_expression) {        // use break/continue
-    System.out.println("Logic here"); 
-}
-do { System.out.println("Logic here");      // do-while
-    } while (boolean_expression);
-for(int i = 0; i < 5; i++) {        // for-in loop
-    System.out.println(i); }
-for (int i = 0, int x = 10; i < x; i++, x--) {
-    System.out.println(i); }
+while (boolean_expression) { System.out.println("Logic here"); }
+do { System.out.println("Logic here"); } while (boolean_expression);
 
-for (int item : arrayListName) {        // for-each loop
-    System.out.println(item); }
-for (int x[]: ArrayList) {      // multidimentional array
-    for (int y : x) {
-        System.out.println("Logic here"); } }
+for (int i = 0; i < 5; i++) System.out.println(i);
+
+for (int item : arrayListName) System.out.println(item);
+for (int x[]: ArrayList)    // multidimentional array
+    for (int y : x) System.out.println("Logic here");
 
 outer: for (;;) {       // named break and continue
     for (;;) {
@@ -130,37 +112,13 @@ outer: for (;;) {       // named break and continue
                         /*** STRING IMMUTABLE OBJECT ***/
 
 // strings are not arrays of chars
-String name = "Name";       // will be saved in special string pull
-String name = new String("Name");     // will not be saved in pull
-String str = String.format("text %d text %s", intVar, strVar);      // string format
+String name = "Name";   // will be saved in special string pull
+String name = new String("Name");   // will not be saved in pull
+String str = String.format("text %d text %s", intVar, strVar);  // string format
 
-String s ="very .... long string from file";        // will take 1Mb (for example)
-String sub1 = s.substring(2,4);     // will use the same memory (1Mb) as first string
-String sub2 = new String(s.substring(2,4));     // will use distinct array of 4 chars
-
-compareTo(String anotherString) // лексиграфическое сравнение строк
-compareToIgnoreCase(String str) // лексиграфическое сравнение строк без учета регистра символов
-concat(String str) // возвращает соединение двух строк
-contains(CharSequence s) // проверяет, входит ли указанная последовательность символов в строку
-endsWith(String suffix) // проверяет завершается ли строка указанным суффиксом
-startsWith(String prefix) // проверяет, начинается ли строка с указанного префикса
-startsWith(String prefix, int toffset) // начинается ли строка в указанной позиции с указанного префикса
-equals(Object anObject) // проверяет идентична ли строка указанному объекту
-getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin) // символьное представление участка строки
-indexOf(int ch) // поиск первого вхождения символа в строке
-indexOf(int ch, int fromIndex) // поиск первого вхождения символа в строке с указанной позиции
-indexOf(String str) // поиск первого вхождения указанной подстроки
-indexOf(String str, int fromIndex) // поиск первого вхождения указанной подстроки с указанной позиции
-lastIndexOf(int ch) // поиск последнего входения символа
-lastIndexOf(int ch, int fromIndex) // поиск последнего входения символа с указанной позиции
-lastIndexOf(String str) // поиск последнего вхождения строки
-lastIndexOf(String str, int fromIndex) // поиск последнего вхождения строки с указанной позиции
-replace(char oldChar, char newChar) // замена в строке одного символа на другой
-replace(CharSequence target, CharSequence replacement) // замена одной подстроки другой
-substring(int beginIndex, int endIndex) // возвратить подстроку как строку
-toLowerCase() // преобразовать строку в нижний регистр
-toUpperCase() // преобразовать строку в верхний регистр
-trim() // отсечь на концах строки пустые символы
+String s ="very .... long string from file";    // will take 1Mb (for example)
+String sub1 = s.substring(2,4); // will use the same memory (1Mb) as first string
+String sub2 = new String(s.substring(2,4)); // will use distinct array of 4 chars
 
 
 
@@ -185,25 +143,10 @@ for (int i = 0; i < list.length; i++) {
 InputStream inStream = new FileInputStream("c:/source.txt");
 OutputStream outStream = new FileOutputStream("c:/result.txt");
 while (inStream.available() > 0) {
-    int data = inStream.read(); outStream.write(data);      // read and write one byte at a time
+    int data = inStream.read(); outStream.write(data);  // read and write one byte at a time
 }
 inStream.close(); outStream.close();
 
-// custom class for read and write streams
-class CustomReadWriteStreams {
-    private ArrayList<Integer> list;
-    public void write(int data) {
-        list.add(data);
-    }
-    public int read() {
-        int first = list.get(0);
-        list.remove(0);
-        return first;
-    }
-    public int available() {
-        return list.size();
-    }
-}
 CustomReadWriteStreams myObject = new CustomReadWriteStreams();     // write to file
 OutputStream outStream = new FileOutputStream ("c:/my-object-data.txt");
 while (myObject.available() > 0) {
@@ -221,11 +164,11 @@ inStream.close();
 
                         /*** ENUM CLASS TYPES ***/
 
-// can be compared using == and in switch statements
-enum LootType {POTION, RING}     // enumeration constants, public static final obj of its type
+// can be compared using == and used in switch statements
+enum LootType {POTION, RING}    // enumeration constants, public static final obj of its type
 LootType vaName = LootType.RING;
-public static enum-type [] values();        // method returns an array of list of enum constants
-public static enum-type valueOf(String str);        // method returns enum const whose value == str
+public static enum-type[] values();    // method returns an array of list of enum constants
+public static enum-type valueOf(String str);    // method returns enum const whose value == str
 
 enum Apple {
     private int price;
@@ -240,20 +183,19 @@ final int compareTo(enum-type e);       // compare the orginal values, both must
 
 
 
-                        /*** ARRAY ***/
+                        /*** ARRAY IMMUTABLE OBJECT***/
 
-// cannot change its length
-int arrName[] = new int[10];        // declaration and allocation of array of int 10 elements
-int[] arrName = new int[10];        // declaration and allocation equivalent of array of int 10 elements
-arrName = new int[5];       // the same var but with new length
-int[] arrOne, arrTwo, arrThree;     // several array declaration
-int arrOne[], arrTwo[], arrThree[];     // several array declaration equivalent
-int count = month.length;       // array length
-Point p = new Point(1,3); Point[] arr = {p, new Point(2,2), null, p};     // array initializer
+int arrName[] = new int[10];    // declaration and allocation of array of int 10 elements
+int[] arrName = new int[10];    // declaration and allocation equivalent array of int 10 elements
+arrName = new int[5];   // the same var but with new length
+int[] arrOne, arrTwo, arrThree; // several array declaration
+int arrOne[], arrTwo[], arrThree[]; // several array declaration equivalent
+int count = month.length;   // array length
+Point p = new Point(1,3); Point[] arr = {p, new Point(2,2), null, p};   // array initializer
 
-int multi[][] = new int[2][3];      // alloc of array of arrays of int, 2 dimentions whith 3 values
-int[][] multi = new int[2][3];      // declaration and allocation equivalent
-int multi[][] = {{2,3},{3,4}};      // array of arrays initializer
+int multi[][] = new int[2][3];  // alloc of array of arrays of int, 2 dimentions whith 3 values
+int[][] multi = new int[2][3];  // declaration and allocation equivalent
+int multi[][] = {{2,3},{3,4}};  // array of arrays initializer
 
 
 
@@ -369,7 +311,7 @@ public class ClassName {
     <T extends Number> ClassName(T arg) {       // generic constructor
         startLives = arg.intValue(); }
 
-    public static void anyNewName(){;}      // cannot access instance vars, connot use this
+    public static void anyNewName(){;}      // cannot access instance vars, connot use this.methodName
 
     final void anyName(){;}     // prevent overriding, method or class cannot be overridden
 
@@ -453,7 +395,7 @@ public class SubClassName extends ClassName {       // cannot inherite private m
 
 static void anyMethodName (int ... args) {}     // variable-length argument, zero or more, as array of ints
 
-Cow cow = new Whale();      // Whale extends Cow, var cow of type Whale now can call onle Cow's methods
+Cow cow = new Whale();      // Whale extends Cow, var cow of type Whale now can call only Cow's methods
 if (cow instanceof Whale) { Whale whale = (Whale) cow; }        // type casting
 Whale whale = (Whale) cow;  // type casting without type checking, will generate InvalidClassCastException
 
@@ -479,18 +421,6 @@ class NewClass {
     NewClass() {        // constructor invokes NewClass(0)
         this(0); }
 }
-
-
-
-                        /*** CLASSES. EXAMPLES ***/
-
-ClassName name = new ClassName();       // create a new instance
-ClassName newName = new ClassName("Name");
-SubClassName anotherName = new SubClassName("Name", 5);
-
-ClassName dmdName;       // declaration of reference of type ClassName
-dmdName = newName; dmdName.methodName      // dynamic method dispatch
-dmdName = anotherName; dmdName.methodName       // dynamic method dispatch
 
 
 
@@ -585,83 +515,45 @@ if (nif.isNotNefative(10))
 
                         /*** GENERICS PARAMETERIZED TYPES ***/
 
-// generic class cannot extend Throwable
-class Generics<Type> {      // Type is a parameter that will be replaced by a real type, can take two+ params
-    static Type objWrong;       // wrong, no static vars of type Type
-    static Type getWrong(){;}       // wrong, no static method can use Type
-    // Type valsWrong[] = new Type[10]; wrong, cannot instantiate an array whose elem type is a type param
-    Type valsCorrect[]; valsCorrect = nums;     // correct, assign reference to existent array
-    // Generics<Integer> gensWrong[] = new Generics<>[10]; wrong, cannot create an array of type-specific gen
-    Generics<?> gensCorrect = new Generics<?>[10];
-
-    Type objName;
-    Generics(Type obj) {
-        objName = obj;
-    }
-    Type getObj() {     // pass the constructor a reference to an object of type Type
-        return objName;
-    }
-    void showType() {
-        System.out.println("Type is: " + objName.getClass().getName());
-    }
+// generic cannot extend Throwable, static vars / methods cannot be of type GenType
+class GenericObj<GenType> {  // parameter will be replaced by a real type, can take 2+ params
+    GenType objName;
+    GenericObj(GenType obj) { objName = obj; }  // pass the constructor a ref to an obj of type GenType
+    GenType getObj() { return objName; }
+    boolean sameAvg(GenericObj<?> gObj) { ; }   // compare two obj with different parameterized type
 }
-public static void main(String args[]) {
-    Generics<Integer> iOb;      // create a reference for Integers
-    iOb = new Generics<Integer>(88);        // create a new obj, use autoboxing to encapsulate int
-    iOb.showType();
-    int value = iOb.getObj();
+GenericObj<Integer> iOb = new GenericObj<>(88); int value = iOb.getObj();    // no type casting
+GenericObj<Double> dOb = new GenericObj<>(8.8); boolean sameVal = iOb.sameAvg(dOb);
+
+// bounded types, argument must be of type Number or a class derived from it
+class GenericObj<GenType extends Number> { }
+// any args passed to GenType must be a subclass of Number and implement MyInterface
+class GenericObj<GenType extends Number & MyInterface> { }  
+
+// call superclass constructor in generics
+class GenSuperObj<GenType> { GenType obj; GenOne(GenType obj) { this.obj = obj; } }
+class GenChildOne<GenType> extends GenSuperObj<GenType> { GenChildOne(GenType obj) { super(obj); } }
+class GenChildTwo<GenType, GenTypeNew> extends GenSuperObj<GenType> {
+    GenTypeNew objTwo;
+    GenChildTwo(GenType argOne, GenTypeNew argTwo) { super(argOne); this.objTwo = argTwo; }
 }
 
 
 
-                        /*** GENERICS. BOUNDED TYPES ***/
+                        /*** GENERIC METHOD ***/
 
-class Stats<T extends Number> {     // type argument must be either Number or a class derived from it
-    T[] nums;
-    Stats(T[] o) {      // pass the constructor a ref to an array of type Number or subclass
-        nums = o;
-    }
-    double average() {
-        double sum = 0.0;
-        for (int i = 0; i < nums.length; i++)
-            sum += nums[i].doubleValue();
-        return sum / nums.length;
-    }
-    boolean sameAvg(Stats<? extends Stats> ob) {      // wildcard argument, Stats<?> matches any Stats obj...
-        if (average() == ob.average())      // or a class derived from Stats
-            return true;
-        return false;
-    }
-}
-public static void main(String args[]) {
-    Integer inums[] = {1, 2, 3};
-    Stats<Integer> iOb = new Stats<Integer>(inums);
-    double v = iOb.average();
-}
+414
 
-class Gen<T extends MyClass & MyInterface> {;}      // T is bounded by a class MyClass and an inteface...
-// MyInterface. Any type argument passed to T must be a subclass of MyClass and implement MyInterface
 
-// generic superclass
-class GenOne<T> {
-    T obj;
-    GenOne(T objArg) {
-        obj = objArg; }
-}
-class GenTwo<T> extends GenOne<T> {
-    GenTwo(T objArg) {
-        super(objArg); }
-}
-GenTwo<Integer> num = new GenTwo<Integer>(100);
 
-class GenThree<T, V> extends GenOne<T> {        // subclass add its own type parameter
-    V objTwo;
-    GenThree(T objArgOne, V objArgTwo) {
-        super(objArgOne);
-        objTwo = objArgTwo; }
-}
-GenThree<String, Integer> x = new GenThree<String, Integer>("Value is:", 99);
-GenThree<String, Integer> x = new GenThree<>("Value is:", 99);      // short hand notation
+                        /*** GENERIC CONSTRUCTOR ***/
+
+
+
+
+                        /*** GENERIC INTERFACE ***/
+
+
 
 
 
@@ -831,104 +723,4 @@ class Clock implements Runnable {   // interapt thread, instanceName.interrupt()
 
 
 
-
-
-
-// synchronized methods, cannot be access by different threads at one time
-class Callme {
-    synchronized void call(String msg) {
-        try {
-            System.out.println("Logic here");
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            System.out.println("Error logic here");
-        }
-    }
-}
-class Caller implements Runnable {
-    String msg;
-    Callme target;
-    Thread t;
-    public Caller(Callme targ, String s) {
-        target = targ;
-        msg = s;
-        t = new Thread(this);
-        t.start();
-    }
-    public void run() {     // class Callme with method definition with the keyword synchronized 
-        target.call(msg);
-    }
-    public void run() {     // synchronized block if Callme class without the keyword synchronized
-        synchronized(target) {
-            target.call(msg);
-        }
-    }
-}
-public static void main(String args[]) {
-    Callme target = new Callme();
-    Caller objOne = new Caller(target, "Hello");
-    Caller objTwo = new Caller(target, "World");
-    try {
-        objOne.t.join();
-        objTwo.t.join();
-    } catch (InterruptedException e) {
-        System.out.println("Error logic here");
-    }
-}
-
-// interthread communication
-class Q {
-    int n;
-    boolean valueSet = false;
-    synchronized int get() {
-        while(!valueSet)
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                System.out.println("Error logic here");
-            }
-        valueSet = false;
-        notify();
-        return n;
-    }
-    synchronized void put(int n) {
-        while(valueSet)
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                System.out.println("Error logic here");
-            }
-            this.n = n;
-            valueSet = true;
-            notify();
-    }
-}
-class Producer implements Runnable {
-    Q q;
-    Producer(Q q) {
-        this.q = q;
-        new Thread(this, "Producer").start();
-    }
-    public void run() {
-        int i = 0;
-        while(true)
-            q.put(i++);
-    }
-}
-class Consumer implements Runnable {
-    Q q;
-    Consumer (Q q) {
-        this.q = q;
-        new Thread(this, "Consumer").start();
-    }
-    public void run() {
-        while(true)
-            q.get();
-    }
-}
-public static void main(String args[]) {
-    Q q = new Q();
-    new Producer(Q);
-    new Consumer(Q);
-}
 
